@@ -2,8 +2,8 @@ use std::ops::{Add, Div, Mul, Neg, Sub};
 
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct Complex {
-    real: f64,
-    imaginary: f64
+    pub real: f64,
+    pub imaginary: f64
 }
 
 impl Complex {
