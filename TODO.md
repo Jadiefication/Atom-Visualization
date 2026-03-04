@@ -1,11 +1,11 @@
 # TODO.md — Quantum Atom Simulation Project
 
 ## Phase 0 — Prep & Math Refactor
-- [ ] Audit all `complex.rs`, `reals.rs`, `vec2/3/4.rs` operations.
+- [x] Audit all `complex.rs`, `reals.rs`, `vec2/3/4.rs` operations.
 - [x] Rework math operations to avoid `Copy`/`Clone` where unnecessary.
     - Use higher-order trait bounds and references (`&self`, `&rhs`) for arithmetic.
     - Ensure operators return new values without unnecessary cloning.
-- [ ] Add unit tests for basic operations (addition, multiplication, norm, dot product).
+- [x] Add unit tests for basic operations (addition, multiplication, norm, dot product).
 
 ## Phase 1 — 2D Wavefunction Core
 - [ ] Define 2D grid structure to store `Complex` amplitudes.
