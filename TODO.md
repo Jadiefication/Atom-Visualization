@@ -2,7 +2,7 @@
 
 ## Phase 0 — Prep & Math Refactor
 - [ ] Audit all `complex.rs`, `reals.rs`, `vec2/3/4.rs` operations.
-- [ ] Rework math operations to avoid `Copy`/`Clone` where unnecessary.
+- [x] Rework math operations to avoid `Copy`/`Clone` where unnecessary.
     - Use higher-order trait bounds and references (`&self`, `&rhs`) for arithmetic.
     - Ensure operators return new values without unnecessary cloning.
 - [ ] Add unit tests for basic operations (addition, multiplication, norm, dot product).
