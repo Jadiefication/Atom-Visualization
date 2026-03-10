@@ -9,9 +9,9 @@
 
 ## Phase 1 — 2D Wavefunction Core
 - [x] Define 2D grid structure to store `Complex` amplitudes.
-- [ ] Implement simple 2D Laplacian finite difference operator.
-- [ ] Implement Gaussian initialization for ψ(x,y).
-- [ ] Implement boundary conditions (e.g., Dirichlet or periodic).
+- [x] Implement simple 2D Laplacian finite difference operator.
+- [x] Implement Gaussian initialization for ψ(x,y).
+- [x] Implement boundary conditions (e.g., Dirichlet or periodic).
 - [ ] Verify norm preservation for initial ψ.
 
 ## Phase 2 — Time Evolution
