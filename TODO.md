@@ -8,7 +8,7 @@
 - [x] Add unit tests for basic operations (addition, multiplication, norm, dot product).
 
 ## Phase 1 — 2D Wavefunction Core
-- [ ] Define 2D grid structure to store `Complex` amplitudes.
+- [x] Define 2D grid structure to store `Complex` amplitudes.
 - [ ] Implement simple 2D Laplacian finite difference operator.
 - [ ] Implement Gaussian initialization for ψ(x,y).
 - [ ] Implement boundary conditions (e.g., Dirichlet or periodic).

@@ -1,7 +1,6 @@
-use std::ops::{Add, Index, IndexMut, Mul, MulAssign, Sub};
-use std::process::Output;
 use crate::complex::Complex;
 use crate::vec2::Vec2;
+use std::ops::{Add, Index, IndexMut, Mul, Sub};
 
 pub struct Matrix<T, const ROWS: usize, const COLS: usize> {
     data: [[T; COLS]; ROWS],
