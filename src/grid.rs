@@ -16,6 +16,9 @@ pub fn grid(start: f64, end: f64, amount: i32) -> Vec<Complex> {
     for i in 0..amount {
         let x = start + (i as f64) * d_x;
         let pos = g_wave_packet(x, sigma);
+        if (pos * pos).real > 1.0 {
+            panic!("Invalid possibility")
+        }
         vec.push(pos);
     }
     vec

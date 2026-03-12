@@ -12,10 +12,10 @@
 - [x] Implement simple 2D Laplacian finite difference operator.
 - [x] Implement Gaussian initialization for ψ(x,y).
 - [x] Implement boundary conditions (e.g., Dirichlet or periodic).
-- [ ] Verify norm preservation for initial ψ.
+- [x] Verify norm preservation for initial ψ. Verify the probability.
 
 ## Phase 2 — Time Evolution
-- [ ] Implement basic explicit time-stepping for ψ(t+Δt).
+- [ ] Implement basic explicit time-stepping for ψ(t+Δt). Done through the schrodinger's(Computing the time derivative in the 1D SE, by doing that we get the change over time).
 - [ ] Optionally implement Crank–Nicolson for stability.
 - [ ] Ensure unitary-like evolution: norm of ψ should remain ~1.
 - [ ] Test with simple potentials (harmonic oscillator).
