@@ -1,7 +1,47 @@
-use Atom::grid::{grid, g_wave_packet, laplacian};
+use Atom::grid::{grid, g_wave_packet, laplacian, update};
 use Atom::complex::Complex;
 use Atom::vec2::Vec2;
 use std::f64;
+
+#[test]
+fn test_update_empty() {
+    let mut grid: Vec<Vec<Complex>> = vec![];
+    update(&mut grid, 0.0, 0.1);
+    assert_eq!(grid.len(), 0);
+}
+
+#[test]
+fn test_update_single_cell() {
+    let mut grid = vec![vec![Complex::new(1.0, 0.0)]];
+    let d_t = 1e-15; // Small d_t
+    update(&mut grid, 0.0, d_t);
+    
+    // In update function for 1x1 grid:
+    // x=0, y=0
+    // complex = 1.0 + 0.0i
+    // energy = pot_energy_fn(Vec3(0,0,0)) = 2.0.exp() / 0.0 = inf
+    // But magnitude() might return 0.0, and 2.0.exp() / 0.0 might be infinity.
+    // However, Vec3::magnitude() for (0,0,0) is 0.
+    
+    // Let's check if it actually changed.
+    assert!(grid[0][0].real != 1.0 || grid[0][0].imaginary != 0.0);
+}
+
+#[test]
+fn test_update_simple_grid() {
+    let mut grid = vec![
+        vec![Complex::new(1.0, 0.0), Complex::new(1.0, 0.0)],
+        vec![Complex::new(1.0, 0.0), Complex::new(1.0, 0.0)],
+    ];
+    let initial_grid = grid.clone();
+    update(&mut grid, 0.0, 1e-15);
+    
+    for x in 0..2 {
+        for y in 0..2 {
+            assert!(grid[x][y] != initial_grid[x][y]);
+        }
+    }
+}
 
 #[test]
 fn test_g_wave_packet_zero() {
