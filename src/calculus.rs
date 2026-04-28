@@ -34,3 +34,7 @@ fn get(grid: &Vec<Vec<Complex>>, i: usize, j: usize) -> Complex {
         Complex { real: 0.0, imaginary: 0.0 }
     }
 }
+
+pub fn relu(num: f64) -> f64 {
+    num.max(0.0)
+}

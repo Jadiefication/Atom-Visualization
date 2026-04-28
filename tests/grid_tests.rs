@@ -1,4 +1,4 @@
-use haje::grid::{g_wave_packet, laplacian};
+use haje::calculus::{g_wave_packet, laplacian};
 use haje::complex::Complex;
 use haje::vec2::Vec2;
 use std::f64;
@@ -83,7 +83,7 @@ fn test_laplacian_boundary() {
     assert!((res.real - 1.0).abs() < 1e-10);
 
     // Test (1, 0) - Bottom edge (saturating_sub(1) for y=0 is 0, which is center)
-    // BUT wait, let's check laplacian implementation in src/grid.rs:
+    // BUT wait, let's check laplacian implementation in src/calculus:
     /*
     let left_val = get(x.saturating_sub(1), y);
     let right_val = get(x + 1, y);
