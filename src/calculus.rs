@@ -1,5 +1,5 @@
 use crate::complex::Complex;
-use crate::vec2::Vec2;
+use crate::vec::vec2::Vec2;
 use std::f64;
 
 pub const PLANCK: f64 = 1.054e-34;

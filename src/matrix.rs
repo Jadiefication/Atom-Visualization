@@ -1,5 +1,5 @@
 use crate::complex::Complex;
-use crate::vec2::Vec2;
+use crate::vec::vec2::Vec2;
 use std::ops::{Add, Index, IndexMut, Mul, Sub};
 
 pub struct Matrix<T, const ROWS: usize, const COLS: usize> {
