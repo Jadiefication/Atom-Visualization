@@ -3,7 +3,7 @@ use crate::vec::vec2::Vec2;
 use std::ops::{Add, Index, IndexMut, Mul, Sub};
 
 pub struct Matrix<T, const ROWS: usize, const COLS: usize> {
-    data: [[T; COLS]; ROWS],
+    pub data: [[T; COLS]; ROWS],
 }
 
 impl<T, const ROWS: usize, const COLS: usize> Matrix<T, ROWS, COLS>

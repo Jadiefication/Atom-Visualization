@@ -1,6 +1,6 @@
 use haje::calculus::{g_wave_packet, laplacian};
 use haje::complex::Complex;
-use haje::vec2::Vec2;
+use haje::vec::vec2::Vec2;
 use std::f64;
 
 #[test]
@@ -70,7 +70,7 @@ fn test_laplacian_boundary() {
         vec![Complex::new(1.0, 0.0), Complex::new(1.0, 0.0), Complex::new(1.0, 0.0)],
     ];
     
-    // Test (0, 1) - Left edge
+    // Test (0, 1) - Left-edge
     // Neighbors:
     // left = (0, 1).saturating_sub(1) = (0, 1) -> 1
     // right = (1, 1) -> 2

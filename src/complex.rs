@@ -7,11 +7,11 @@ pub struct Complex {
 }
 
 impl Complex {
-    pub fn new(real: f64, imaginary: f64) -> Self {
+    pub const fn new(real: f64, imaginary: f64) -> Self {
         Self { real, imaginary }
     }
 
-    pub fn zero() -> Self {
+    pub const fn zero() -> Self {
         Self { real: 0.0, imaginary: 0.0 }
     }
 
