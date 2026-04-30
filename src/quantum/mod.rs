@@ -1,2 +1,2 @@
-pub mod ket;
 pub mod gates;
+pub mod qubit;

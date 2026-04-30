@@ -1,4 +1,3 @@
-use std::f32::consts::FRAC_PI_4;
 use std::f32::consts::FRAC_1_SQRT_2;
 use crate::complex::Complex;
 use crate::matrix::Matrix;

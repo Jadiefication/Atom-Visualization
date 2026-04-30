@@ -35,6 +35,10 @@ impl Complex {
             imaginary: exp_real * self.imaginary.sin(),
         }
     }
+
+    pub fn norm_sqr(&self) -> f64 {
+        self.real.powi(2) + self.imaginary.powi(2)
+    }
 }
 
 impl Add for Complex {
