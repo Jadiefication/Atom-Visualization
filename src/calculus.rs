@@ -31,7 +31,7 @@ fn get(grid: &Vec<Vec<Complex>>, i: usize, j: usize) -> Complex {
     if i < max_x && j < max_y {
         grid[i][j]
     } else {
-        Complex { real: 0.0, imaginary: 0.0 }
+        Complex { re: 0.0, im: 0.0 }
     }
 }
 

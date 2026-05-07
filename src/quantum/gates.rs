@@ -37,7 +37,7 @@ pub const H: Matrix<Complex, 2, 2> = Matrix {
     ]
 };
 
-pub fn PHASE(angle: f32) -> Matrix<Complex, 2, 2> {
+pub fn phase(angle: f32) -> Matrix<Complex, 2, 2> {
     Matrix {
         data: [
             [Complex::new(1.0, 0.0), Complex::zero()],
@@ -55,7 +55,7 @@ pub const SWAP: Matrix<Complex, 4, 4> = Matrix {
     ]
 };
 
-pub fn C_U<T, const N: usize, const DOUBLE_N: usize>(u: Matrix<T, N, N>) -> Matrix<T, DOUBLE_N, DOUBLE_N>
+pub fn c_u<T, const N: usize, const DOUBLE_N: usize>(u: Matrix<T, N, N>) -> Matrix<T, DOUBLE_N, DOUBLE_N>
 where
     T: Default + Copy + From<f32>
 {

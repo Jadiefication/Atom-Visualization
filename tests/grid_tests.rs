@@ -18,8 +18,8 @@ fn test_g_wave_packet_zero() {
     let expected_real = expected_fraction;
     let expected_imaginary = 0.0;
     
-    assert!((res.real - expected_real).abs() < 1e-10);
-    assert!((res.imaginary - expected_imaginary).abs() < 1e-10);
+    assert!((res.re - expected_real).abs() < 1e-10);
+    assert!((res.im - expected_imaginary).abs() < 1e-10);
 }
 
 #[test]
@@ -34,8 +34,8 @@ fn test_g_wave_packet_non_zero() {
     let expected_real = x.cos() * expected_fraction;
     let expected_imaginary = x.sin() * expected_fraction;
     
-    assert!((res.real - expected_real).abs() < 1e-10);
-    assert!((res.imaginary - expected_imaginary).abs() < 1e-10);
+    assert!((res.re - expected_real).abs() < 1e-10);
+    assert!((res.im - expected_imaginary).abs() < 1e-10);
 }
 
 #[test]
@@ -54,8 +54,8 @@ fn test_laplacian_internal() {
 
     // left + right + up + down - 4 * center
     // 1 + 1 + 1 + 1 - 4 * 2 = 4 - 8 = -4
-    assert!((res.real - (-4.0)).abs() < 1e-10);
-    assert!((res.imaginary - 0.0).abs() < 1e-10);
+    assert!((res.re - (-4.0)).abs() < 1e-10);
+    assert!((res.im - 0.0).abs() < 1e-10);
 }
 
 #[test]
@@ -80,7 +80,7 @@ fn test_laplacian_boundary() {
     // Laplacian: 1 + 2 + 1 + 1 - 4 * 1 = 5 - 4 = 1
     let center = Vec2 { x: 0, y: 1 };
     let res = laplacian(&center, &grid);
-    assert!((res.real - 1.0).abs() < 1e-10);
+    assert!((res.re - 1.0).abs() < 1e-10);
 
     // Test (1, 0) - Bottom edge (saturating_sub(1) for y=0 is 0, which is center)
     // BUT wait, let's check laplacian implementation in src/calculus:
@@ -100,7 +100,7 @@ fn test_laplacian_boundary() {
     // Laplacian: 1 + 1 + 2 + 1 - 4 * 1 = 5 - 4 = 1
     let center = Vec2 { x: 1, y: 0 };
     let res = laplacian(&center, &grid);
-    assert!((res.real - 1.0).abs() < 1e-10);
+    assert!((res.re - 1.0).abs() < 1e-10);
 }
 
 #[test]
@@ -124,7 +124,7 @@ fn test_laplacian_corner() {
     // Laplacian: 1 + 1 + 1 + 1 - 4 * 1 = 0
     let center = Vec2 { x: 0, y: 0 };
     let res = laplacian(&center, &grid);
-    assert!((res.real - 0.0).abs() < 1e-10);
+    assert!((res.re - 0.0).abs() < 1e-10);
     
     // Test (2, 2) - Top-right corner
     // left = (1, 2) = 1
@@ -135,5 +135,5 @@ fn test_laplacian_corner() {
     // Laplacian: 1 + 0 + 0 + 1 - 4 * 1 = 2 - 4 = -2
     let center = Vec2 { x: 2, y: 2 };
     let res = laplacian(&center, &grid);
-    assert!((res.real - (-2.0)).abs() < 1e-10);
+    assert!((res.re - (-2.0)).abs() < 1e-10);
 }
