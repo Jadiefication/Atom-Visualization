@@ -1,6 +1,6 @@
 [package]
 name = "haje"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2024"
 authors = ["Jadie <jadeczjade008@gmail.com>"]
 description = "A linear algebra library, developed by yours truly, and probably not that efficient."
