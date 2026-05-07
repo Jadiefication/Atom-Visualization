@@ -2,17 +2,17 @@ use std::f32::consts::FRAC_1_SQRT_2;
 use crate::complex::Complex;
 use crate::matrix::Matrix;
 
-pub const I: Matrix<i8, 2, 2> = Matrix {
+pub const I: Matrix<Complex, 2, 2> = Matrix {
     data: [
-        [1, 0],
-        [0, 1]
+        [Complex::new(1.0, 0.0), Complex::zero()],
+        [Complex::zero(), Complex::new(1.0, 0.0)]
     ]
 };
 
-pub const X: Matrix<i8, 2, 2> = Matrix {
+pub const X: Matrix<Complex, 2, 2> = Matrix {
     data: [
-        [0, 1],
-        [1, 0]
+        [Complex::zero(), Complex::new(1.0, 0.0)],
+        [Complex::new(1.0, 0.0), Complex::zero()]
     ]
 };
 
@@ -23,21 +23,21 @@ pub const Y: Matrix<Complex, 2, 2> = Matrix {
     ]
 };
 
-pub const Z: Matrix<i8, 2, 2> = Matrix {
+pub const Z: Matrix<Complex, 2, 2> = Matrix {
     data: [
-        [1, 0],
-        [0, -1]
+        [Complex::new(1.0, 0.0), Complex::zero()],
+        [Complex::zero(), Complex::new(-1.0, 0.0)]
     ]
 };
 
-pub const H: Matrix<f32, 2, 2> = Matrix {
+pub const H: Matrix<Complex, 2, 2> = Matrix {
     data: [
-        [FRAC_1_SQRT_2, FRAC_1_SQRT_2],
-        [FRAC_1_SQRT_2, -FRAC_1_SQRT_2]
+        [Complex::new(FRAC_1_SQRT_2 as f64, 0.0), Complex::new(FRAC_1_SQRT_2 as f64, 0.0)],
+        [Complex::new(FRAC_1_SQRT_2 as f64, 0.0), Complex::new(-(FRAC_1_SQRT_2 as f64), 0.0)]
     ]
 };
 
-pub fn ROTATE(angle: f32) -> Matrix<Complex, 2, 2> {
+pub fn PHASE(angle: f32) -> Matrix<Complex, 2, 2> {
     Matrix {
         data: [
             [Complex::new(1.0, 0.0), Complex::zero()],
@@ -46,12 +46,12 @@ pub fn ROTATE(angle: f32) -> Matrix<Complex, 2, 2> {
     }
 }
 
-pub const SWAP: Matrix<i8, 4, 4> = Matrix {
+pub const SWAP: Matrix<Complex, 4, 4> = Matrix {
     data: [
-        [1, 0, 0, 0],
-        [0, 0, 1, 0],
-        [0, 1, 0, 0],
-        [0, 0, 0, 1]
+        [Complex::new(1.0, 0.0), Complex::zero(), Complex::zero(), Complex::zero()],
+        [Complex::zero(), Complex::zero(), Complex::new(1.0, 0.0), Complex::zero()],
+        [Complex::zero(), Complex::new(1.0, 0.0), Complex::zero(), Complex::zero()],
+        [Complex::zero(), Complex::zero(), Complex::zero(), Complex::new(1.0, 0.0)]
     ]
 };
 
