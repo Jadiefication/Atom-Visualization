@@ -1,17 +1,27 @@
 use crate::complex::Complex;
 use crate::vec::vec2::Vec2;
-use std::f64;
+use std::f64::consts::{PI};
 
+/// Reduced Planck constant (`ħ`) in SI units.
 pub const PLANCK: f64 = 1.054e-34;
-pub const PI: f64 = f64::consts::PI;
-pub const E: f64 = f64::consts::E;
 
+/// Returns a 1D Gaussian wave packet value at position `x` with spread `sigma`.
+///
+/// The returned complex value is:
+/// - envelope: `exp(-x² / (4σ²)) / ((2π)^(1/4) * sqrt(σ))`
+/// - phase: `cos(x) + i sin(x)`
 pub fn g_wave_packet(x: f64, sigma: f64) -> Complex {
     let fraction = (-x.powi(2)/(4.0*sigma.powi(2))).exp() /
         ((2.0*PI).powf(1.0/4.0) * sigma.sqrt());
     Complex::new(x.cos(), x.sin()) * fraction
 }
 
+/// Computes the discrete 2D Laplacian at `center` over a complex-valued grid.
+///
+/// Missing neighbors are treated as zero outside bounds.
+///
+/// This uses a 5-point stencil equivalent to:
+/// `left + right + up + down - 4 * center`.
 pub fn laplacian(center: &Vec2<usize>, grid: &Vec<Vec<Complex>>) -> Complex {
     let x = center.x;
     let y = center.y;
@@ -35,6 +45,9 @@ fn get(grid: &Vec<Vec<Complex>>, i: usize, j: usize) -> Complex {
     }
 }
 
+/// Rectified Linear Unit activation function.
+///
+/// Returns `num` when positive, otherwise `0.0`.
 pub fn relu(num: f64) -> f64 {
     num.max(0.0)
 }

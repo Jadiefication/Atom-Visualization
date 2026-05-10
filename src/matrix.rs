@@ -1,13 +1,28 @@
+//! Const-generic matrix type and operations.
+//!
+//! [`Matrix`] stores values in row-major order and uses const generics for shape,
+//! making dimensions part of the type.
+
 use crate::complex::Complex;
 use crate::vec::vec2::Vec2;
 use std::ops::{Add, Index, IndexMut, Mul, Sub};
 
+/// A const-generic matrix with `ROWS x COLS` elements.
+///
+/// # Type parameters
+/// - `T`: element type.
+/// - `ROWS`: number of rows.
+/// - `COLS`: number of columns.
 pub struct Matrix<T, const ROWS: usize, const COLS: usize> {
+    /// Backing matrix data in row-major layout.
     pub data: [[T; COLS]; ROWS],
 }
 
 impl<T, const ROWS: usize, const COLS: usize> Matrix<T, ROWS, COLS>
 {
+    /// Builds a matrix by evaluating `f(row, col)` for each element.
+    ///
+    /// This is the primary constructor used internally by arithmetic operations.
     pub fn from_fn<F>(mut f: F) -> Self
     where
         F: FnMut(usize, usize) -> T,
@@ -21,6 +36,9 @@ impl<T, const ROWS: usize, const COLS: usize> Matrix<T, ROWS, COLS>
         }
     }
 
+    /// Returns the transposed matrix.
+    ///
+    /// The output has dimensions `COLS x ROWS`.
     pub fn transpose(&self) -> Matrix<T, COLS, ROWS>
     where
         T: Clone
@@ -127,6 +145,10 @@ where
 }
 
 impl Matrix<f64, 2, 2> {
+    /// Returns a 2D rotation matrix for angle `radians`.
+    ///
+    /// The matrix is:
+    /// `[[cos θ, -sin θ], [sin θ, cos θ]]`.
     pub fn rotation(radians: f64) -> Self {
         Matrix {
             data: [
@@ -138,6 +160,7 @@ impl Matrix<f64, 2, 2> {
 }
 
 impl Matrix<f64, 3, 3> {
+    /// Returns a 3D rotation matrix around the X axis.
     pub fn r_x(radians: f64) -> Self {
         Matrix {
             data: [
@@ -148,6 +171,7 @@ impl Matrix<f64, 3, 3> {
         }
     }
 
+    /// Returns a 3D rotation matrix around the Y axis.
     pub fn r_y(radians: f64) -> Self {
         Matrix {
             data: [
@@ -158,6 +182,7 @@ impl Matrix<f64, 3, 3> {
         }
     }
 
+    /// Returns a 3D rotation matrix around the Z axis.
     pub fn r_z(radians: f64) -> Self {
         Matrix {
             data: [
@@ -170,6 +195,9 @@ impl Matrix<f64, 3, 3> {
 }
 
 impl<T> Matrix<T, 3, 3> {
+    /// Computes the determinant of a `3x3` matrix.
+    ///
+    /// Uses cofactor expansion along the first row.
     pub fn det3(&self) -> T
     where
         for<'a> &'a T: Mul<Output = &'a T> + Sub<Output = &'a T> + From<i32> + Add<Output = T>,
@@ -205,6 +233,9 @@ where
 }
 
 impl<T> Matrix<T, 2, 2> {
+    /// Computes the determinant of a `2x2` matrix.
+    ///
+    /// Equivalent to `a*d - b*c`.
     pub fn det2(&self) -> T
     where
             for<'a> &'a T: Mul<Output = &'a T> + Sub<Output = T> + From<i32> + Add<Output = T>,

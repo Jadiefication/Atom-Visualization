@@ -1,9 +1,14 @@
 use std::ops::{Add, Div, Mul, Sub};
 use crate::reals::RealField;
 
+/// A two-dimensional vector.
+///
+/// `Vec2<T>` is generic over scalar type `T`, typically `f32` or `f64`.
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct Vec2<T> {
+    /// X component.
     pub x: T,
+    /// Y component.
     pub y: T,
 }
 
@@ -11,14 +16,21 @@ impl<T> Vec2<T>
 where
     T: RealField,
 {
+    /// Returns the dot product of `self` and `other`.
+    ///
+    /// In coordinates: `x1*x2 + y1*y2`.
     pub fn dot(&self, other: Self) -> T {
         self.x * other.x + self.y * other.y
     }
 
+    /// Returns the Euclidean length of the vector.
     pub fn magnitude(&self) -> T {
         (self.x * self.x + self.y * self.y).sqrt()
     }
 
+    /// Returns a normalized vector with unit magnitude.
+    ///
+    /// This divides each component by [`Vec2::magnitude`].
     pub fn normalize(self) -> Self {
         self / self.magnitude()
     }

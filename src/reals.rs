@@ -1,5 +1,11 @@
 use std::ops::{Add, Sub, Mul, Div};
 
+/// Trait representing real scalar types used by generic vector operations.
+///
+/// This trait is intentionally small and captures only the capabilities needed by
+/// this crate's generic vector methods (`dot`, `magnitude`, `normalize`).
+///
+/// Implementations are provided for `f32` and `f64`.
 pub trait RealField:
 Copy
 + Add<Output = Self>
@@ -7,6 +13,7 @@ Copy
 + Mul<Output = Self>
 + Div<Output = Self>
 {
+    /// Returns the square root of the value.
     fn sqrt(self) -> Self;
 }
 

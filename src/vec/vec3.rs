@@ -1,10 +1,16 @@
 use crate::reals::RealField;
 use std::ops::{Add, Div, Mul, Sub};
 
+/// A three-dimensional vector.
+///
+/// Suitable for geometry and physics-style operations in Cartesian space.
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct Vec3<T> {
+    /// X component.
     pub x: T,
+    /// Y component.
     pub y: T,
+    /// Z component.
     pub z: T,
 }
 
@@ -12,12 +18,14 @@ impl<T> Vec3<T>
 where
     T: RealField,
 {
+    /// Returns the dot product of `self` and `other`.
     pub fn dot(&self, other: Self) -> T {
         self.x * other.x
             + self.y * other.y
             + self.z * other.z
     }
 
+    /// Returns the Euclidean length of the vector.
     pub fn magnitude(&self) -> T {
         (self.x * self.x
             + self.y * self.y
@@ -25,10 +33,14 @@ where
             .sqrt()
     }
 
+    /// Returns a normalized vector with unit magnitude.
     pub fn normalize(self) -> Self {
         self / self.magnitude()
     }
 
+    /// Returns the cross product `self × other`.
+    ///
+    /// The resulting vector is orthogonal to both inputs.
     pub fn cross(&self, other: Self) -> Self {
         Self {
             x: self.y * other.z - self.z * other.y,
