@@ -11,3 +11,8 @@ keywords = ["linear-algebra", "matrix", "simulation"]
 categories = ["science", "mathematics"]
 
 [dependencies]
+wgpu = { version = "29.0.3", optional = true }
+
+[features]
+default = []
+gpu = ["wgpu"]

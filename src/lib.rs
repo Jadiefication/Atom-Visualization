@@ -34,6 +34,8 @@ pub mod calculus;
 pub mod complex;
 /// Const-generic matrix type and operations.
 pub mod matrix;
+#[cfg(feature = "gpu")]
+mod priv_gpu;
 /// Quantum gates and qubit state utilities.
 pub mod quantum;
 /// Numeric trait abstractions used by generic math types.
