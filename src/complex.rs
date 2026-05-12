@@ -15,7 +15,7 @@ pub struct Complex {
     /// Real part.
     pub re: f64,
     /// Imaginary part.
-    pub im: f64
+    pub im: f64,
 }
 
 impl Complex {
@@ -30,7 +30,10 @@ impl Complex {
     /// assert_eq!(z.im, -2.0);
     /// ```
     pub const fn new(real: f64, imaginary: f64) -> Self {
-        Self { re: real, im: imaginary }
+        Self {
+            re: real,
+            im: imaginary,
+        }
     }
 
     /// Returns the additive identity `0 + 0i`.
@@ -40,7 +43,10 @@ impl Complex {
 
     /// Returns the complex conjugate `re - i * im`.
     pub fn conj(&self) -> Self {
-        Complex { re: self.re, im: self.im * -1.0 }
+        Complex {
+            re: self.re,
+            im: self.im * -1.0,
+        }
     }
 
     /// Returns the magnitude `|z| = sqrt(re² + im²)`.
@@ -103,8 +109,7 @@ impl Mul for Complex {
     fn mul(self, other: Self) -> Self {
         Self {
             re: self.re * other.re - self.im * other.im,
-            im: self.re * other.im
-                + self.im * other.re,
+            im: self.re * other.im + self.im * other.re,
         }
     }
 }
@@ -161,7 +166,7 @@ impl Mul<f64> for Complex {
     fn mul(self, other: f64) -> Self {
         Self {
             re: self.re * other,
-            im: self.im * other
+            im: self.im * other,
         }
     }
 }
@@ -172,7 +177,7 @@ impl Div<f64> for Complex {
     fn div(self, other: f64) -> Self {
         Self {
             re: self.re / other,
-            im: self.im / other
+            im: self.im / other,
         }
     }
 }

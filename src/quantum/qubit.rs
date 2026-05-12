@@ -1,15 +1,15 @@
 //! Qubit state containers and tensor-product composition helpers.
 
-use std::ops::{BitAnd, Index, Mul, Neg};
 use crate::complex::Complex;
 use crate::matrix::Matrix;
+use std::ops::{BitAnd, Index, Mul};
 
 /// A fixed-size qubit register represented by complex amplitudes.
 ///
 /// `SIZE` is the number of amplitudes in the state vector. For a full register
 /// of `n` qubits, this is typically `2^n`.
 pub struct Qubit<const SIZE: usize> {
-    pub(crate) ampls: [Complex; SIZE]
+    pub(crate) ampls: [Complex; SIZE],
 }
 
 /// A dynamically-sized tensor-product qubit state.
@@ -17,17 +17,14 @@ pub struct Qubit<const SIZE: usize> {
 /// This is used when the state size is not known at compile time, especially
 /// after repeated tensor-product operations.
 pub struct TensorQubit {
-    pub(crate) ampls: Vec<Complex>
+    pub(crate) ampls: Vec<Complex>,
 }
 
 impl Qubit<2> {
     fn new(alpha: Complex, beta: Complex) -> Self {
         assert!((1.0 - (alpha.norm_sqr() + beta.norm_sqr())).abs() < 1e-10);
         Qubit {
-            ampls: [
-                alpha,
-                beta
-            ]
+            ampls: [alpha, beta],
         }
     }
 }
@@ -41,7 +38,7 @@ impl Default for Qubit<2> {
 
 impl<const SIZE: usize> Index<usize> for Qubit<SIZE> {
     type Output = Complex;
-    
+
     fn index(&self, index: usize) -> &<Self as Index<usize>>::Output {
         &self.ampls[index]
     }
@@ -59,7 +56,9 @@ impl<const SIZE: usize> Mul<Matrix<Complex, SIZE, SIZE>> for Qubit<SIZE> {
     type Output = Qubit<SIZE>;
 
     fn mul(self, matrix: Matrix<Complex, SIZE, SIZE>) -> Self::Output {
-        let mut new_qubit = Qubit { ampls: [Complex::zero(); SIZE] };
+        let mut new_qubit = Qubit {
+            ampls: [Complex::zero(); SIZE],
+        };
         for (i, vec) in matrix.data.iter().enumerate() {
             for (j, complex) in vec.iter().enumerate() {
                 new_qubit.ampls[i] = new_qubit[i] + (*complex * self.ampls[j])
@@ -134,12 +133,18 @@ impl TensorQubit {
     ///
     /// Panics if the number of amplitudes does not match `N`.
     pub fn into_qubit<const N: usize>(self) -> Qubit<N> {
-        assert_eq!(self.ampls.len(), N, "TensorQubit size {} != Qubit<{}>", self.ampls.len(), N);
+        assert_eq!(
+            self.ampls.len(),
+            N,
+            "TensorQubit size {} != Qubit<{}>",
+            self.ampls.len(),
+            N
+        );
         let mut ampls = [Complex::zero(); N];
         ampls.copy_from_slice(&self.ampls);
         Qubit { ampls }
     }
-    
+
     /// Returns the number of amplitudes in the tensor state.
     ///
     /// For a normalized `n`-qubit state, this is usually `2^n`.

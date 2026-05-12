@@ -28,15 +28,15 @@
 //! assert_eq!(z, Complex::new(1.0, -2.0));
 //! ```
 
-/// Complex number utilities and operators.
-pub mod complex;
-/// Numeric trait abstractions used by generic math types.
-pub mod reals;
-/// Const-generic matrix type and operations.
-pub mod matrix;
 /// Calculus and grid-based helper functions.
 pub mod calculus;
-/// Vector types (`Vec2`, `Vec3`, `Vec4`).
-pub mod vec;
+/// Complex number utilities and operators.
+pub mod complex;
+/// Const-generic matrix type and operations.
+pub mod matrix;
 /// Quantum gates and qubit state utilities.
 pub mod quantum;
+/// Numeric trait abstractions used by generic math types.
+pub mod reals;
+/// Vector types (`Vec2`, `Vec3`, `Vec4`).
+pub mod vec;

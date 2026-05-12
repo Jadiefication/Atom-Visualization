@@ -1,5 +1,5 @@
-use std::ops::{Add, Div, Mul, Sub};
 use crate::reals::RealField;
+use std::ops::{Add, Div, Mul, Sub};
 
 /// A two-dimensional vector.
 ///

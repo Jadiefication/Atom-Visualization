@@ -1,6 +1,6 @@
 use crate::complex::Complex;
 use crate::vec::vec2::Vec2;
-use std::f64::consts::{PI};
+use std::f64::consts::PI;
 
 /// Reduced Planck constant (`ħ`) in SI units.
 pub const PLANCK: f64 = 1.054e-34;
@@ -11,8 +11,8 @@ pub const PLANCK: f64 = 1.054e-34;
 /// - envelope: `exp(-x² / (4σ²)) / ((2π)^(1/4) * sqrt(σ))`
 /// - phase: `cos(x) + i sin(x)`
 pub fn g_wave_packet(x: f64, sigma: f64) -> Complex {
-    let fraction = (-x.powi(2)/(4.0*sigma.powi(2))).exp() /
-        ((2.0*PI).powf(1.0/4.0) * sigma.sqrt());
+    let fraction =
+        (-x.powi(2) / (4.0 * sigma.powi(2))).exp() / ((2.0 * PI).powf(1.0 / 4.0) * sigma.sqrt());
     Complex::new(x.cos(), x.sin()) * fraction
 }
 

@@ -2,7 +2,7 @@ use std::f32::consts::{FRAC_1_SQRT_2, PI};
 
 use haje::complex::Complex;
 use haje::matrix::Matrix;
-use haje::quantum::gates::{c_u, H, I, phase, S, SWAP, T, X, Y, Z};
+use haje::quantum::gates::{H, I, S, SWAP, T, X, Y, Z, c_u, phase};
 use haje::quantum::qubit::{Qubit, TensorQubit};
 
 // ---------------------------------------------------------------------------
@@ -11,26 +11,18 @@ use haje::quantum::qubit::{Qubit, TensorQubit};
 
 fn assert_complex_eq(a: Complex, b: Complex) {
     let eps = 1e-6;
-    assert!(
-        (a.re - b.re).abs() < eps,
-        "re: {} != {}",
-        a.re,
-        b.re
-    );
-    assert!(
-        (a.im - b.im).abs() < eps,
-        "im: {} != {}",
-        a.im,
-        b.im
-    );
+    assert!((a.re - b.re).abs() < eps, "re: {} != {}", a.re, b.re);
+    assert!((a.im - b.im).abs() < eps, "im: {} != {}", a.im, b.im);
 }
 
 /// Checks size, ampls.len(), and every amplitude of a TensorQubit.
 fn assert_tensor_eq(tq: &TensorQubit, expected_size: usize, expected: &[Complex]) {
     assert_eq!(
-        tq.size(), expected_size,
+        tq.size(),
+        expected_size,
         "TensorQubit.size: got {}, expected {}",
-        tq.size(), expected_size
+        tq.size(),
+        expected_size
     );
     assert_eq!(
         expected.len(),
@@ -456,9 +448,9 @@ fn test_tensor_associativity_left_vs_right() {
     // (|0⟩ ⊗ |1⟩) ⊗ |0⟩  ==  |0⟩ ⊗ (|1⟩ ⊗ |0⟩)
     // exercises both TensorQubit & Qubit and Qubit & TensorQubit impls
     let make_zero = || Qubit::<2>::default();
-    let make_one  = || Qubit::<2>::default() * X;
+    let make_one = || Qubit::<2>::default() * X;
 
-    let left  = (make_zero() & make_one()) & make_zero();
+    let left = (make_zero() & make_one()) & make_zero();
     let right = make_zero() & (make_one() & make_zero());
 
     assert_eq!(left.size(), 8);
@@ -473,9 +465,9 @@ fn test_tensor_associativity_four_qubits() {
     // ((|1⟩ ⊗ |0⟩) ⊗ |1⟩) ⊗ |0⟩  ==  |1⟩ ⊗ (|0⟩ ⊗ (|1⟩ ⊗ |0⟩))
     // both should be |1010⟩, index 10
     let make_zero = || Qubit::<2>::default();
-    let make_one  = || Qubit::<2>::default() * X;
+    let make_one = || Qubit::<2>::default() * X;
 
-    let left  = ((make_one() & make_zero()) & make_one()) & make_zero();
+    let left = ((make_one() & make_zero()) & make_one()) & make_zero();
     let right = make_one() & (make_zero() & (make_one() & make_zero()));
 
     assert_eq!(left.size(), 16);

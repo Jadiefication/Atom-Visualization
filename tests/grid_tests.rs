@@ -8,16 +8,16 @@ fn test_g_wave_packet_zero() {
     let sigma = 1.0;
     let x = 0.0;
     let res = g_wave_packet(x, sigma);
-    
+
     // x = 0.0
     // fraction = exp(-0 / (4 * 1)) / ((2 * PI)^0.25 * sqrt(1))
     // fraction = 1.0 / (2 * PI)^0.25
     let expected_fraction = 1.0 / (2.0 * f64::consts::PI).powf(0.25);
-    
+
     // Complex::new(cos(0), sin(0)) * fraction = (1.0, 0.0) * fraction
     let expected_real = expected_fraction;
     let expected_imaginary = 0.0;
-    
+
     assert!((res.re - expected_real).abs() < 1e-10);
     assert!((res.im - expected_imaginary).abs() < 1e-10);
 }
@@ -27,13 +27,13 @@ fn test_g_wave_packet_non_zero() {
     let sigma = 2.0;
     let x = 1.0;
     let res = g_wave_packet(x, sigma);
-    
-    let expected_fraction = (-x.powi(2) / (4.0 * sigma.powi(2))).exp() /
-        ((2.0 * f64::consts::PI).powf(0.25) * sigma.sqrt());
-    
+
+    let expected_fraction = (-x.powi(2) / (4.0 * sigma.powi(2))).exp()
+        / ((2.0 * f64::consts::PI).powf(0.25) * sigma.sqrt());
+
     let expected_real = x.cos() * expected_fraction;
     let expected_imaginary = x.sin() * expected_fraction;
-    
+
     assert!((res.re - expected_real).abs() < 1e-10);
     assert!((res.im - expected_imaginary).abs() < 1e-10);
 }
@@ -45,9 +45,21 @@ fn test_laplacian_internal() {
     // 1 2 1
     // 1 1 1
     let grid = vec![
-        vec![Complex::new(1.0, 0.0), Complex::new(1.0, 0.0), Complex::new(1.0, 0.0)],
-        vec![Complex::new(1.0, 0.0), Complex::new(2.0, 0.0), Complex::new(1.0, 0.0)],
-        vec![Complex::new(1.0, 0.0), Complex::new(1.0, 0.0), Complex::new(1.0, 0.0)],
+        vec![
+            Complex::new(1.0, 0.0),
+            Complex::new(1.0, 0.0),
+            Complex::new(1.0, 0.0),
+        ],
+        vec![
+            Complex::new(1.0, 0.0),
+            Complex::new(2.0, 0.0),
+            Complex::new(1.0, 0.0),
+        ],
+        vec![
+            Complex::new(1.0, 0.0),
+            Complex::new(1.0, 0.0),
+            Complex::new(1.0, 0.0),
+        ],
     ];
     let center = Vec2 { x: 1, y: 1 };
     let res = laplacian(&center, &grid);
@@ -65,11 +77,23 @@ fn test_laplacian_boundary() {
     // 1 2 1
     // 1 1 1
     let grid = vec![
-        vec![Complex::new(1.0, 0.0), Complex::new(1.0, 0.0), Complex::new(1.0, 0.0)],
-        vec![Complex::new(1.0, 0.0), Complex::new(2.0, 0.0), Complex::new(1.0, 0.0)],
-        vec![Complex::new(1.0, 0.0), Complex::new(1.0, 0.0), Complex::new(1.0, 0.0)],
+        vec![
+            Complex::new(1.0, 0.0),
+            Complex::new(1.0, 0.0),
+            Complex::new(1.0, 0.0),
+        ],
+        vec![
+            Complex::new(1.0, 0.0),
+            Complex::new(2.0, 0.0),
+            Complex::new(1.0, 0.0),
+        ],
+        vec![
+            Complex::new(1.0, 0.0),
+            Complex::new(1.0, 0.0),
+            Complex::new(1.0, 0.0),
+        ],
     ];
-    
+
     // Test (0, 1) - Left-edge
     // Neighbors:
     // left = (0, 1).saturating_sub(1) = (0, 1) -> 1
@@ -110,9 +134,21 @@ fn test_laplacian_corner() {
     // 1 2 1
     // 1 1 1
     let grid = vec![
-        vec![Complex::new(1.0, 0.0), Complex::new(1.0, 0.0), Complex::new(1.0, 0.0)],
-        vec![Complex::new(1.0, 0.0), Complex::new(2.0, 0.0), Complex::new(1.0, 0.0)],
-        vec![Complex::new(1.0, 0.0), Complex::new(1.0, 0.0), Complex::new(1.0, 0.0)],
+        vec![
+            Complex::new(1.0, 0.0),
+            Complex::new(1.0, 0.0),
+            Complex::new(1.0, 0.0),
+        ],
+        vec![
+            Complex::new(1.0, 0.0),
+            Complex::new(2.0, 0.0),
+            Complex::new(1.0, 0.0),
+        ],
+        vec![
+            Complex::new(1.0, 0.0),
+            Complex::new(1.0, 0.0),
+            Complex::new(1.0, 0.0),
+        ],
     ];
 
     // Test (0, 0) - Bottom-left corner
@@ -125,7 +161,7 @@ fn test_laplacian_corner() {
     let center = Vec2 { x: 0, y: 0 };
     let res = laplacian(&center, &grid);
     assert!((res.re - 0.0).abs() < 1e-10);
-    
+
     // Test (2, 2) - Top-right corner
     // left = (1, 2) = 1
     // right = (3, 2) = 0 (out of bounds)

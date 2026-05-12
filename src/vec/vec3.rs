@@ -20,17 +20,12 @@ where
 {
     /// Returns the dot product of `self` and `other`.
     pub fn dot(&self, other: Self) -> T {
-        self.x * other.x
-            + self.y * other.y
-            + self.z * other.z
+        self.x * other.x + self.y * other.y + self.z * other.z
     }
 
     /// Returns the Euclidean length of the vector.
     pub fn magnitude(&self) -> T {
-        (self.x * self.x
-            + self.y * self.y
-            + self.z * self.z)
-            .sqrt()
+        (self.x * self.x + self.y * self.y + self.z * self.z).sqrt()
     }
 
     /// Returns a normalized vector with unit magnitude.
@@ -60,7 +55,7 @@ where
         Self {
             x: self.x + rhs.x,
             y: self.y + rhs.y,
-            z: self.z + rhs.z
+            z: self.z + rhs.z,
         }
     }
 }
@@ -75,7 +70,7 @@ where
         Self {
             x: self.x - rhs.x,
             y: self.y - rhs.y,
-            z: self.z - rhs.z
+            z: self.z - rhs.z,
         }
     }
 }
@@ -90,7 +85,7 @@ where
         Self {
             x: self.x * rhs,
             y: self.y * rhs,
-            z: self.z * rhs
+            z: self.z * rhs,
         }
     }
 }
@@ -105,7 +100,7 @@ where
         Self {
             x: self.x / rhs,
             y: self.y / rhs,
-            z: self.z / rhs
+            z: self.z / rhs,
         }
     }
 }

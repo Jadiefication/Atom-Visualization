@@ -18,8 +18,7 @@ pub struct Matrix<T, const ROWS: usize, const COLS: usize> {
     pub data: [[T; COLS]; ROWS],
 }
 
-impl<T, const ROWS: usize, const COLS: usize> Matrix<T, ROWS, COLS>
-{
+impl<T, const ROWS: usize, const COLS: usize> Matrix<T, ROWS, COLS> {
     /// Builds a matrix by evaluating `f(row, col)` for each element.
     ///
     /// This is the primary constructor used internally by arithmetic operations.
@@ -28,11 +27,7 @@ impl<T, const ROWS: usize, const COLS: usize> Matrix<T, ROWS, COLS>
         F: FnMut(usize, usize) -> T,
     {
         Matrix {
-            data: std::array::from_fn(|i| {
-                std::array::from_fn(|j| {
-                    f(i, j)
-                })
-            }),
+            data: std::array::from_fn(|i| std::array::from_fn(|j| f(i, j))),
         }
     }
 
@@ -41,7 +36,7 @@ impl<T, const ROWS: usize, const COLS: usize> Matrix<T, ROWS, COLS>
     /// The output has dimensions `COLS x ROWS`.
     pub fn transpose(&self) -> Matrix<T, COLS, ROWS>
     where
-        T: Clone
+        T: Clone,
     {
         Matrix::from_fn(|j, i| self[i][j].clone())
     }
@@ -70,9 +65,7 @@ where
     fn add(self, rhs: Self) -> Self::Output {
         let left = self.data;
         let right = rhs.data;
-        Matrix::from_fn(|i, j| {
-            &left[i][j] + &right[i][j]
-        })
+        Matrix::from_fn(|i, j| &left[i][j] + &right[i][j])
     }
 }
 
@@ -85,9 +78,7 @@ where
     fn sub(self, rhs: Self) -> Self::Output {
         let left = self.data;
         let right = rhs.data;
-        Matrix::from_fn(|i, j| {
-            &left[i][j] - &right[i][j]
-        })
+        Matrix::from_fn(|i, j| &left[i][j] - &right[i][j])
     }
 }
 
@@ -99,9 +90,7 @@ where
 
     fn mul(self, rhs: f64) -> Self::Output {
         let left = self.data;
-        Matrix::from_fn(|i, j| {
-            &left[i][j] * &rhs
-        })
+        Matrix::from_fn(|i, j| &left[i][j] * &rhs)
     }
 }
 
@@ -113,14 +102,12 @@ where
 
     fn mul(self, rhs: Complex) -> Self::Output {
         let left = self.data;
-        Matrix::from_fn(|i, j| {
-            &left[i][j] * &rhs
-        })
+        Matrix::from_fn(|i, j| &left[i][j] * &rhs)
     }
 }
 
-impl<T, N, const ROWS: usize, const COLS: usize, const K: usize>
-Mul<Matrix<N, COLS, K>> for Matrix<T, ROWS, COLS>
+impl<T, N, const ROWS: usize, const COLS: usize, const K: usize> Mul<Matrix<N, COLS, K>>
+    for Matrix<T, ROWS, COLS>
 where
     for<'a> &'a T: Mul<&'a N, Output = N>,
     N: Add<Output = N> + Default + Copy,
@@ -153,8 +140,8 @@ impl Matrix<f64, 2, 2> {
         Matrix {
             data: [
                 [radians.cos(), -radians.sin()],
-                [radians.sin(), radians.cos()]
-            ]
+                [radians.sin(), radians.cos()],
+            ],
         }
     }
 }
@@ -166,8 +153,8 @@ impl Matrix<f64, 3, 3> {
             data: [
                 [1.0, 0.0, 0.0],
                 [0.0, radians.cos(), -radians.sin()],
-                [0.0, radians.sin(), radians.cos()]
-            ]
+                [0.0, radians.sin(), radians.cos()],
+            ],
         }
     }
 
@@ -177,8 +164,8 @@ impl Matrix<f64, 3, 3> {
             data: [
                 [radians.cos(), 0.0, radians.sin()],
                 [0.0, 1.0, 0.0],
-                [-radians.sin(), 0.0, radians.cos()]
-            ]
+                [-radians.sin(), 0.0, radians.cos()],
+            ],
         }
     }
 
@@ -188,8 +175,8 @@ impl Matrix<f64, 3, 3> {
             data: [
                 [radians.cos(), -radians.sin(), 0.0],
                 [radians.sin(), radians.cos(), 0.0],
-                [0.0, 0.0, 1.0]
-            ]
+                [0.0, 0.0, 1.0],
+            ],
         }
     }
 }
@@ -218,7 +205,8 @@ impl<T> Matrix<T, 3, 3> {
 
 impl<T, N> Mul<Vec2<T>> for Matrix<N, 2, 2>
 where
-    T: Mul<N, Output = T> + Add<Output = T>, for<'a> &'a T: Mul<&'a N, Output = T>
+    T: Mul<N, Output = T> + Add<Output = T>,
+    for<'a> &'a T: Mul<&'a N, Output = T>,
 {
     type Output = Vec2<T>;
 
@@ -238,7 +226,7 @@ impl<T> Matrix<T, 2, 2> {
     /// Equivalent to `a*d - b*c`.
     pub fn det2(&self) -> T
     where
-            for<'a> &'a T: Mul<Output = &'a T> + Sub<Output = T> + From<i32> + Add<Output = T>,
+        for<'a> &'a T: Mul<Output = &'a T> + Sub<Output = T> + From<i32> + Add<Output = T>,
     {
         let a = &self[0][0];
         let b = &self[0][1];
