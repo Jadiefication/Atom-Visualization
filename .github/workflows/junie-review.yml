@@ -2,8 +2,8 @@ name: Code Review
 
 on:
   pull_request:
-    types: [opened, synchronize]
-    branches: [main]
+    types: [opened, synchronize, reopened]
+    branches: [ "main" ]
 
 jobs:
   review:
