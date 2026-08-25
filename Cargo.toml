@@ -13,7 +13,7 @@ categories = ["science", "mathematics", "wasm", "rendering", "concurrency"]
 
 [dependencies]
 tokio = { version = "1.52.3", optional = true }
-wgpu = { version = "29.0.3", optional = true }
+wgpu = { version = "30.0.1", optional = true }
 
 [features]
 default = []
