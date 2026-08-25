@@ -24,11 +24,7 @@ fn assert_tensor_eq(tq: &TensorQubit, expected_size: usize, expected: &[Complex]
         tq.size(),
         expected_size
     );
-    assert_eq!(
-        expected.len(),
-        expected_size,
-        "test bug: expected slice has wrong length"
-    );
+    assert_eq!(expected.len(), expected_size, "test bug: expected slice has wrong length");
     for i in 0..expected_size {
         assert_complex_eq(tq[i], expected[i]);
     }
@@ -186,9 +182,7 @@ fn test_swap_gate_values() {
 
 #[test]
 fn test_controlled_u_gate_shape_and_values() {
-    let u = Matrix {
-        data: [[2.0_f32, 3.0_f32], [4.0_f32, 5.0_f32]],
-    };
+    let u = Matrix { data: [[2.0_f32, 3.0_f32], [4.0_f32, 5.0_f32]] };
     let controlled: Matrix<f32, 4, 4> = c_u::<f32, 2, 4>(u);
 
     // Top-left 2x2 is identity
@@ -249,7 +243,6 @@ fn test_qubit_double_x_is_identity() {
 
 #[test]
 fn test_qubit_double_hadamard_is_identity() {
-    let v = FRAC_1_SQRT_2 as f64;
     // H*H = I, so |0⟩ -> H -> H -> |0⟩
     let q = Qubit::<2>::default() * H * H;
     assert_complex_eq(q[0], one());
@@ -486,9 +479,8 @@ fn test_tensor_norm_preserved_two_qubits() {
     let pair = (Qubit::<2>::default() * H) & (Qubit::<2>::default() * X);
     assert_eq!(pair.size(), 4);
 
-    let norm_sq: f64 = (0..pair.size())
-        .map(|i| pair[i].re * pair[i].re + pair[i].im * pair[i].im)
-        .sum();
+    let norm_sq: f64 =
+        (0..pair.size()).map(|i| pair[i].re * pair[i].re + pair[i].im * pair[i].im).sum();
     assert!((norm_sq - 1.0).abs() < 1e-6, "norm^2 = {}", norm_sq);
 }
 
@@ -498,9 +490,8 @@ fn test_tensor_norm_preserved_three_qubits() {
     let triple = (make_h() & make_h()) & make_h();
     assert_eq!(triple.size(), 8);
 
-    let norm_sq: f64 = (0..triple.size())
-        .map(|i| triple[i].re * triple[i].re + triple[i].im * triple[i].im)
-        .sum();
+    let norm_sq: f64 =
+        (0..triple.size()).map(|i| triple[i].re * triple[i].re + triple[i].im * triple[i].im).sum();
     assert!((norm_sq - 1.0).abs() < 1e-6, "norm^2 = {}", norm_sq);
 }
 
@@ -510,9 +501,8 @@ fn test_tensor_norm_preserved_four_qubits() {
     let quad = (make_h() & make_h()) & (make_h() & make_h());
     assert_eq!(quad.size(), 16);
 
-    let norm_sq: f64 = (0..quad.size())
-        .map(|i| quad[i].re * quad[i].re + quad[i].im * quad[i].im)
-        .sum();
+    let norm_sq: f64 =
+        (0..quad.size()).map(|i| quad[i].re * quad[i].re + quad[i].im * quad[i].im).sum();
     assert!((norm_sq - 1.0).abs() < 1e-6, "norm^2 = {}", norm_sq);
 }
 

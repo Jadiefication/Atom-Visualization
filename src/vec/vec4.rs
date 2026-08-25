@@ -1,5 +1,6 @@
-use crate::reals::RealField;
 use std::ops::{Add, Div, Mul, Sub};
+
+use crate::reals::RealField;
 
 /// A four-dimensional vector.
 ///
@@ -46,12 +47,7 @@ where
     type Output = Self;
 
     fn add(self, rhs: Self) -> Self {
-        Self {
-            r: self.r + rhs.r,
-            g: self.g + rhs.g,
-            b: self.b + rhs.b,
-            a: self.a + rhs.a,
-        }
+        Self { r: self.r + rhs.r, g: self.g + rhs.g, b: self.b + rhs.b, a: self.a + rhs.a }
     }
 }
 
@@ -62,12 +58,7 @@ where
     type Output = Self;
 
     fn sub(self, rhs: Self) -> Self {
-        Self {
-            r: self.r - rhs.r,
-            g: self.g - rhs.g,
-            b: self.b - rhs.b,
-            a: self.a - rhs.a,
-        }
+        Self { r: self.r - rhs.r, g: self.g - rhs.g, b: self.b - rhs.b, a: self.a - rhs.a }
     }
 }
 
@@ -78,12 +69,7 @@ where
     type Output = Self;
 
     fn mul(self, rhs: T) -> Self {
-        Self {
-            r: self.r * rhs,
-            g: self.g * rhs,
-            b: self.b * rhs,
-            a: self.a * rhs,
-        }
+        Self { r: self.r * rhs, g: self.g * rhs, b: self.b * rhs, a: self.a * rhs }
     }
 }
 
@@ -94,11 +80,6 @@ where
     type Output = Self;
 
     fn div(self, rhs: T) -> Self {
-        Self {
-            r: self.r / rhs,
-            g: self.g / rhs,
-            b: self.b / rhs,
-            a: self.a / rhs,
-        }
+        Self { r: self.r / rhs, g: self.g / rhs, b: self.b / rhs, a: self.a / rhs }
     }
 }

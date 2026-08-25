@@ -3,12 +3,13 @@ name = "haje"
 version = "0.3.0"
 edition = "2024"
 authors = ["Jadie <jadeczjade008@gmail.com>"]
-description = "A linear algebra library, developed by yours truly, and probably not that efficient."
-license = "MIT" # Use standard SPDX identifiers
+description = "A high-performance linear algebra and quantum simulation library for Rust."
+license = "MIT"
 repository = "https://github.com/Jadiefication/Haje"
+documentation = "https://docs.rs/haje"
 readme = "README.md"
-keywords = ["linear-algebra", "matrix", "simulation"]
-categories = ["science", "mathematics"]
+keywords = ["linear-algebra", "matrix", "quantum", "simulation", "gpu"]
+categories = ["science", "mathematics", "wasm", "rendering", "concurrency"]
 
 [dependencies]
 tokio = { version = "1.52.3", optional = true }

@@ -3,9 +3,10 @@
 //! [`Matrix`] stores values in row-major order and uses const generics for shape,
 //! making dimensions part of the type.
 
+use std::ops::{Add, Index, IndexMut, Mul, Sub};
+
 use crate::complex::Complex;
 use crate::vec::vec2::Vec2;
-use std::ops::{Add, Index, IndexMut, Mul, Sub};
 
 /// A const-generic matrix with `ROWS x COLS` elements.
 ///
@@ -26,9 +27,7 @@ impl<T, const ROWS: usize, const COLS: usize> Matrix<T, ROWS, COLS> {
     where
         F: FnMut(usize, usize) -> T,
     {
-        Matrix {
-            data: std::array::from_fn(|i| std::array::from_fn(|j| f(i, j))),
-        }
+        Matrix { data: std::array::from_fn(|i| std::array::from_fn(|j| f(i, j))) }
     }
 
     /// Returns the transposed matrix.
@@ -137,12 +136,7 @@ impl Matrix<f64, 2, 2> {
     /// The matrix is:
     /// `[[cos θ, -sin θ], [sin θ, cos θ]]`.
     pub fn rotation(radians: f64) -> Self {
-        Matrix {
-            data: [
-                [radians.cos(), -radians.sin()],
-                [radians.sin(), radians.cos()],
-            ],
-        }
+        Matrix { data: [[radians.cos(), -radians.sin()], [radians.sin(), radians.cos()]] }
     }
 }
 
@@ -211,12 +205,9 @@ where
     type Output = Vec2<T>;
 
     fn mul(self, rhs: Vec2<T>) -> Self::Output {
-        let ref x = rhs.x;
-        let ref y = rhs.y;
-        Vec2 {
-            x: x * &self[0][0] + y * &self[0][1],
-            y: x * &self[1][0] + y * &self[1][1],
-        }
+        let x = &rhs.x;
+        let y = &rhs.y;
+        Vec2 { x: x * &self[0][0] + y * &self[0][1], y: x * &self[1][0] + y * &self[1][1] }
     }
 }
 

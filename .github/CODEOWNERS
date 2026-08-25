@@ -1,0 +1,9 @@
+# CODEOWNERS
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-codeowners
+
+# Default owners for all files
+*       @owner
+
+# Specific owners for sensitive areas
+/src/priv_gpu/  @gpu-owner
+/tests/         @qa-owner

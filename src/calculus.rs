@@ -1,6 +1,7 @@
+use std::f64::consts::PI;
+
 use crate::complex::Complex;
 use crate::vec::vec2::Vec2;
-use std::f64::consts::PI;
 
 /// Reduced Planck constant (`ħ`) in SI units.
 pub const PLANCK: f64 = 1.054e-34;
@@ -22,7 +23,7 @@ pub fn g_wave_packet(x: f64, sigma: f64) -> Complex {
 ///
 /// This uses a 5-point stencil equivalent to:
 /// `left + right + up + down - 4 * center`.
-pub fn laplacian(center: &Vec2<usize>, grid: &Vec<Vec<Complex>>) -> Complex {
+pub fn laplacian(center: &Vec2<usize>, grid: &[Vec<Complex>]) -> Complex {
     let x = center.x;
     let y = center.y;
 
@@ -35,14 +36,10 @@ pub fn laplacian(center: &Vec2<usize>, grid: &Vec<Vec<Complex>>) -> Complex {
     left_val + right_val + up_val + down_val - center_val * 4.0
 }
 
-fn get(grid: &Vec<Vec<Complex>>, i: usize, j: usize) -> Complex {
+fn get(grid: &[Vec<Complex>], i: usize, j: usize) -> Complex {
     let max_x = grid.len();
     let max_y = if max_x > 0 { grid[0].len() } else { 0 };
-    if i < max_x && j < max_y {
-        grid[i][j]
-    } else {
-        Complex { re: 0.0, im: 0.0 }
-    }
+    if i < max_x && j < max_y { grid[i][j] } else { Complex { re: 0.0, im: 0.0 } }
 }
 
 /// Rectified Linear Unit activation function.

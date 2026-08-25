@@ -1,5 +1,6 @@
-use crate::reals::RealField;
 use std::ops::{Add, Div, Mul, Sub};
+
+use crate::reals::RealField;
 
 /// A three-dimensional vector.
 ///
@@ -52,11 +53,7 @@ where
     type Output = Self;
 
     fn add(self, rhs: Self) -> Self {
-        Self {
-            x: self.x + rhs.x,
-            y: self.y + rhs.y,
-            z: self.z + rhs.z,
-        }
+        Self { x: self.x + rhs.x, y: self.y + rhs.y, z: self.z + rhs.z }
     }
 }
 
@@ -67,11 +64,7 @@ where
     type Output = Self;
 
     fn sub(self, rhs: Self) -> Self {
-        Self {
-            x: self.x - rhs.x,
-            y: self.y - rhs.y,
-            z: self.z - rhs.z,
-        }
+        Self { x: self.x - rhs.x, y: self.y - rhs.y, z: self.z - rhs.z }
     }
 }
 
@@ -82,11 +75,7 @@ where
     type Output = Self;
 
     fn mul(self, rhs: T) -> Self {
-        Self {
-            x: self.x * rhs,
-            y: self.y * rhs,
-            z: self.z * rhs,
-        }
+        Self { x: self.x * rhs, y: self.y * rhs, z: self.z * rhs }
     }
 }
 
@@ -97,10 +86,6 @@ where
     type Output = Self;
 
     fn div(self, rhs: T) -> Self {
-        Self {
-            x: self.x / rhs,
-            y: self.y / rhs,
-            z: self.z / rhs,
-        }
+        Self { x: self.x / rhs, y: self.y / rhs, z: self.z / rhs }
     }
 }

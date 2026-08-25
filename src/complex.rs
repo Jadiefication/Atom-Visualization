@@ -30,10 +30,7 @@ impl Complex {
     /// assert_eq!(z.im, -2.0);
     /// ```
     pub const fn new(real: f64, imaginary: f64) -> Self {
-        Self {
-            re: real,
-            im: imaginary,
-        }
+        Self { re: real, im: imaginary }
     }
 
     /// Returns the additive identity `0 + 0i`.
@@ -43,10 +40,7 @@ impl Complex {
 
     /// Returns the complex conjugate `re - i * im`.
     pub fn conj(&self) -> Self {
-        Complex {
-            re: self.re,
-            im: self.im * -1.0,
-        }
+        Complex { re: self.re, im: -self.im }
     }
 
     /// Returns the magnitude `|z| = sqrt(re² + im²)`.
@@ -67,10 +61,7 @@ impl Complex {
     pub fn exp(&self) -> Self {
         let exp_real = self.re.exp();
 
-        Self {
-            re: exp_real * self.im.cos(),
-            im: exp_real * self.im.sin(),
-        }
+        Self { re: exp_real * self.im.cos(), im: exp_real * self.im.sin() }
     }
 
     /// Returns the squared magnitude `|z|² = re² + im²`.
@@ -85,10 +76,7 @@ impl Add for Complex {
     type Output = Self;
 
     fn add(self, other: Self) -> Self {
-        Self {
-            re: self.re + other.re,
-            im: self.im + other.im,
-        }
+        Self { re: self.re + other.re, im: self.im + other.im }
     }
 }
 
@@ -96,10 +84,7 @@ impl Sub for Complex {
     type Output = Self;
 
     fn sub(self, other: Self) -> Self {
-        Self {
-            re: self.re - other.re,
-            im: self.im - other.im,
-        }
+        Self { re: self.re - other.re, im: self.im - other.im }
     }
 }
 
@@ -131,10 +116,7 @@ impl Neg for Complex {
     type Output = Self;
 
     fn neg(self) -> Self {
-        Self {
-            re: -self.re,
-            im: -self.im,
-        }
+        Self { re: -self.re, im: -self.im }
     }
 }
 
@@ -142,10 +124,7 @@ impl Add<f64> for Complex {
     type Output = Self;
 
     fn add(self, other: f64) -> Self {
-        Self {
-            re: self.re + other,
-            im: self.im,
-        }
+        Self { re: self.re + other, im: self.im }
     }
 }
 
@@ -153,10 +132,7 @@ impl Sub<f64> for Complex {
     type Output = Self;
 
     fn sub(self, other: f64) -> Self {
-        Self {
-            re: self.re - other,
-            im: self.im,
-        }
+        Self { re: self.re - other, im: self.im }
     }
 }
 
@@ -164,10 +140,7 @@ impl Mul<f64> for Complex {
     type Output = Self;
 
     fn mul(self, other: f64) -> Self {
-        Self {
-            re: self.re * other,
-            im: self.im * other,
-        }
+        Self { re: self.re * other, im: self.im * other }
     }
 }
 
@@ -175,9 +148,6 @@ impl Div<f64> for Complex {
     type Output = Self;
 
     fn div(self, other: f64) -> Self {
-        Self {
-            re: self.re / other,
-            im: self.im / other,
-        }
+        Self { re: self.re / other, im: self.im / other }
     }
 }

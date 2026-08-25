@@ -16,9 +16,12 @@ Please provide a brief summary of the changes made in this pull request.
 
 ### Checklist
 
-- [ ] I have tested the changes locally
-- [ ] I have updated the documentation as needed
-- [ ] I have checked for code style issues
+- [ ] `cargo test` passes locally.
+- [ ] `cargo fmt --check` passes locally.
+- [ ] `cargo clippy --all-targets -- -D warnings` passes locally.
+- [ ] `cargo doc --no-deps --all-features` passes locally.
+- [ ] I have updated the documentation as needed.
+- [ ] I have added tests for new functionality.
 
 ---
 

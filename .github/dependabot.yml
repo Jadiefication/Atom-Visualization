@@ -5,9 +5,10 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-      day: "monday"
-      time: "09:00"
-      timezone: "UTC"
+    groups:
+      dependencies:
+        patterns:
+          - "*"
     open-pull-requests-limit: 10
     labels:
       - dependencies
@@ -18,9 +19,10 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-      day: "monday"
-      time: "09:30"
-      timezone: "UTC"
+    groups:
+      actions:
+        patterns:
+          - "*"
     labels:
       - dependencies
       - github-actions

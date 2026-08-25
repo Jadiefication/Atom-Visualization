@@ -1,7 +1,8 @@
+use std::f64;
+
 use haje::calculus::{g_wave_packet, laplacian};
 use haje::complex::Complex;
 use haje::vec::vec2::Vec2;
-use std::f64;
 
 #[test]
 fn test_g_wave_packet_zero() {
@@ -45,21 +46,9 @@ fn test_laplacian_internal() {
     // 1 2 1
     // 1 1 1
     let grid = vec![
-        vec![
-            Complex::new(1.0, 0.0),
-            Complex::new(1.0, 0.0),
-            Complex::new(1.0, 0.0),
-        ],
-        vec![
-            Complex::new(1.0, 0.0),
-            Complex::new(2.0, 0.0),
-            Complex::new(1.0, 0.0),
-        ],
-        vec![
-            Complex::new(1.0, 0.0),
-            Complex::new(1.0, 0.0),
-            Complex::new(1.0, 0.0),
-        ],
+        vec![Complex::new(1.0, 0.0), Complex::new(1.0, 0.0), Complex::new(1.0, 0.0)],
+        vec![Complex::new(1.0, 0.0), Complex::new(2.0, 0.0), Complex::new(1.0, 0.0)],
+        vec![Complex::new(1.0, 0.0), Complex::new(1.0, 0.0), Complex::new(1.0, 0.0)],
     ];
     let center = Vec2 { x: 1, y: 1 };
     let res = laplacian(&center, &grid);
@@ -77,21 +66,9 @@ fn test_laplacian_boundary() {
     // 1 2 1
     // 1 1 1
     let grid = vec![
-        vec![
-            Complex::new(1.0, 0.0),
-            Complex::new(1.0, 0.0),
-            Complex::new(1.0, 0.0),
-        ],
-        vec![
-            Complex::new(1.0, 0.0),
-            Complex::new(2.0, 0.0),
-            Complex::new(1.0, 0.0),
-        ],
-        vec![
-            Complex::new(1.0, 0.0),
-            Complex::new(1.0, 0.0),
-            Complex::new(1.0, 0.0),
-        ],
+        vec![Complex::new(1.0, 0.0), Complex::new(1.0, 0.0), Complex::new(1.0, 0.0)],
+        vec![Complex::new(1.0, 0.0), Complex::new(2.0, 0.0), Complex::new(1.0, 0.0)],
+        vec![Complex::new(1.0, 0.0), Complex::new(1.0, 0.0), Complex::new(1.0, 0.0)],
     ];
 
     // Test (0, 1) - Left-edge
@@ -134,21 +111,9 @@ fn test_laplacian_corner() {
     // 1 2 1
     // 1 1 1
     let grid = vec![
-        vec![
-            Complex::new(1.0, 0.0),
-            Complex::new(1.0, 0.0),
-            Complex::new(1.0, 0.0),
-        ],
-        vec![
-            Complex::new(1.0, 0.0),
-            Complex::new(2.0, 0.0),
-            Complex::new(1.0, 0.0),
-        ],
-        vec![
-            Complex::new(1.0, 0.0),
-            Complex::new(1.0, 0.0),
-            Complex::new(1.0, 0.0),
-        ],
+        vec![Complex::new(1.0, 0.0), Complex::new(1.0, 0.0), Complex::new(1.0, 0.0)],
+        vec![Complex::new(1.0, 0.0), Complex::new(2.0, 0.0), Complex::new(1.0, 0.0)],
+        vec![Complex::new(1.0, 0.0), Complex::new(1.0, 0.0), Complex::new(1.0, 0.0)],
     ];
 
     // Test (0, 0) - Bottom-left corner

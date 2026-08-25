@@ -1,8 +1,9 @@
 //! Qubit state containers and tensor-product composition helpers.
 
+use std::ops::{BitAnd, Index, Mul};
+
 use crate::complex::Complex;
 use crate::matrix::Matrix;
-use std::ops::{BitAnd, Index, Mul};
 
 /// A fixed-size qubit register represented by complex amplitudes.
 ///
@@ -23,9 +24,7 @@ pub struct TensorQubit {
 impl Qubit<2> {
     fn new(alpha: Complex, beta: Complex) -> Self {
         assert!((1.0 - (alpha.norm_sqr() + beta.norm_sqr())).abs() < 1e-10);
-        Qubit {
-            ampls: [alpha, beta],
-        }
+        Qubit { ampls: [alpha, beta] }
     }
 }
 
@@ -56,9 +55,7 @@ impl<const SIZE: usize> Mul<Matrix<Complex, SIZE, SIZE>> for Qubit<SIZE> {
     type Output = Qubit<SIZE>;
 
     fn mul(self, matrix: Matrix<Complex, SIZE, SIZE>) -> Self::Output {
-        let mut new_qubit = Qubit {
-            ampls: [Complex::zero(); SIZE],
-        };
+        let mut new_qubit = Qubit { ampls: [Complex::zero(); SIZE] };
         for (i, vec) in matrix.data.iter().enumerate() {
             for (j, complex) in vec.iter().enumerate() {
                 new_qubit.ampls[i] = new_qubit[i] + (*complex * self.ampls[j])
@@ -133,13 +130,7 @@ impl TensorQubit {
     ///
     /// Panics if the number of amplitudes does not match `N`.
     pub fn into_qubit<const N: usize>(self) -> Qubit<N> {
-        assert_eq!(
-            self.ampls.len(),
-            N,
-            "TensorQubit size {} != Qubit<{}>",
-            self.ampls.len(),
-            N
-        );
+        assert_eq!(self.ampls.len(), N, "TensorQubit size {} != Qubit<{}>", self.ampls.len(), N);
         let mut ampls = [Complex::zero(); N];
         ampls.copy_from_slice(&self.ampls);
         Qubit { ampls }
