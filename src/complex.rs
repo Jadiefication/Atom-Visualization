@@ -1,6 +1,6 @@
 //! Complex-number support used across the crate.
 //!
-//! The [`Complex`] type is intentionally small and `Copy`, making it suitable
+//! The [`Complex`](crate::complex::Complex) type is intentionally small and `Copy`, making it suitable
 //! for numeric code where values are passed by value frequently (for example,
 //! matrix and qubit operations).
 
