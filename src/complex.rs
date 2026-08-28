@@ -155,3 +155,9 @@ impl<T: RealField> Div<T> for Complex<T> {
         Self { re: self.re / other, im: self.im / other }
     }
 }
+
+impl<T: RealField> From<T> for Complex<T> {
+    fn from(val: T) -> Self {
+        Complex::new(val, T::zero())
+    }
+}
