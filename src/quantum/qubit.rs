@@ -9,6 +9,7 @@ use crate::matrix::Matrix;
 ///
 /// `SIZE` is the number of amplitudes in the state vector. For a full register
 /// of `n` qubits, this is typically `2^n`.
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub struct Qubit<const SIZE: usize> {
     pub(crate) ampls: [Complex<f64>; SIZE],
 }
@@ -17,6 +18,7 @@ pub struct Qubit<const SIZE: usize> {
 ///
 /// This is used when the state size is not known at compile time, especially
 /// after repeated tensor-product operations.
+#[derive(Debug, Clone, PartialEq)]
 pub struct TensorQubit {
     pub(crate) ampls: Vec<Complex<f64>>,
 }
