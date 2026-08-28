@@ -10,7 +10,7 @@ use crate::matrix::Matrix;
 /// `SIZE` is the number of amplitudes in the state vector. For a full register
 /// of `n` qubits, this is typically `2^n`.
 pub struct Qubit<const SIZE: usize> {
-    pub(crate) ampls: [Complex; SIZE],
+    pub(crate) ampls: [Complex<f64>; SIZE],
 }
 
 /// A dynamically-sized tensor-product qubit state.
@@ -18,11 +18,11 @@ pub struct Qubit<const SIZE: usize> {
 /// This is used when the state size is not known at compile time, especially
 /// after repeated tensor-product operations.
 pub struct TensorQubit {
-    pub(crate) ampls: Vec<Complex>,
+    pub(crate) ampls: Vec<Complex<f64>>,
 }
 
 impl Qubit<2> {
-    fn new(alpha: Complex, beta: Complex) -> Self {
+    fn new(alpha: Complex<f64>, beta: Complex<f64>) -> Self {
         assert!((1.0 - (alpha.norm_sqr() + beta.norm_sqr())).abs() < 1e-10);
         Qubit { ampls: [alpha, beta] }
     }
@@ -36,7 +36,7 @@ impl Default for Qubit<2> {
 }
 
 impl<const SIZE: usize> Index<usize> for Qubit<SIZE> {
-    type Output = Complex;
+    type Output = Complex<f64>;
 
     fn index(&self, index: usize) -> &<Self as Index<usize>>::Output {
         &self.ampls[index]
@@ -44,17 +44,17 @@ impl<const SIZE: usize> Index<usize> for Qubit<SIZE> {
 }
 
 impl Index<usize> for TensorQubit {
-    type Output = Complex;
+    type Output = Complex<f64>;
 
     fn index(&self, index: usize) -> &<Self as Index<usize>>::Output {
         &self.ampls[index]
     }
 }
 
-impl<const SIZE: usize> Mul<Matrix<Complex, SIZE, SIZE>> for Qubit<SIZE> {
+impl<const SIZE: usize> Mul<Matrix<Complex<f64>, SIZE, SIZE>> for Qubit<SIZE> {
     type Output = Qubit<SIZE>;
 
-    fn mul(self, matrix: Matrix<Complex, SIZE, SIZE>) -> Self::Output {
+    fn mul(self, matrix: Matrix<Complex<f64>, SIZE, SIZE>) -> Self::Output {
         let mut new_qubit = Qubit { ampls: [Complex::zero(); SIZE] };
         for (i, vec) in matrix.data.iter().enumerate() {
             for (j, complex) in vec.iter().enumerate() {

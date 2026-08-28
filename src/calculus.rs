@@ -1,6 +1,6 @@
 use std::f64::consts::PI;
 
-use crate::complex::Complex;
+use crate::complex::{Complex, Complex64};
 use crate::vec::vec2::Vec2;
 
 /// Reduced Planck constant (`ħ`) in SI units.
@@ -11,7 +11,7 @@ pub const PLANCK: f64 = 1.054e-34;
 /// The returned complex value is:
 /// - envelope: `exp(-x² / (4σ²)) / ((2π)^(1/4) * sqrt(σ))`
 /// - phase: `cos(x) + i sin(x)`
-pub fn g_wave_packet(x: f64, sigma: f64) -> Complex {
+pub fn g_wave_packet(x: f64, sigma: f64) -> Complex64 {
     let fraction =
         (-x.powi(2) / (4.0 * sigma.powi(2))).exp() / ((2.0 * PI).powf(1.0 / 4.0) * sigma.sqrt());
     Complex::new(x.cos(), x.sin()) * fraction
@@ -23,7 +23,7 @@ pub fn g_wave_packet(x: f64, sigma: f64) -> Complex {
 ///
 /// This uses a 5-point stencil equivalent to:
 /// `left + right + up + down - 4 * center`.
-pub fn laplacian(center: &Vec2<usize>, grid: &[Vec<Complex>]) -> Complex {
+pub fn laplacian(center: &Vec2<usize>, grid: &[Vec<Complex64>]) -> Complex64 {
     let x = center.x;
     let y = center.y;
 
@@ -36,7 +36,7 @@ pub fn laplacian(center: &Vec2<usize>, grid: &[Vec<Complex>]) -> Complex {
     left_val + right_val + up_val + down_val - center_val * 4.0
 }
 
-fn get(grid: &[Vec<Complex>], i: usize, j: usize) -> Complex {
+fn get(grid: &[Vec<Complex64>], i: usize, j: usize) -> Complex64 {
     let max_x = grid.len();
     let max_y = if max_x > 0 { grid[0].len() } else { 0 };
     if i < max_x && j < max_y { grid[i][j] } else { Complex { re: 0.0, im: 0.0 } }

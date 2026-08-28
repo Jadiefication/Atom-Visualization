@@ -9,14 +9,14 @@ use haje::quantum::qubit::{Qubit, TensorQubit};
 // Helpers
 // ---------------------------------------------------------------------------
 
-fn assert_complex_eq(a: Complex, b: Complex) {
+fn assert_complex_eq(a: Complex<f64>, b: Complex<f64>) {
     let eps = 1e-6;
     assert!((a.re - b.re).abs() < eps, "re: {} != {}", a.re, b.re);
     assert!((a.im - b.im).abs() < eps, "im: {} != {}", a.im, b.im);
 }
 
 /// Checks size, ampls.len(), and every amplitude of a TensorQubit.
-fn assert_tensor_eq(tq: &TensorQubit, expected_size: usize, expected: &[Complex]) {
+fn assert_tensor_eq(tq: &TensorQubit, expected_size: usize, expected: &[Complex<f64>]) {
     assert_eq!(
         tq.size(),
         expected_size,
@@ -30,11 +30,11 @@ fn assert_tensor_eq(tq: &TensorQubit, expected_size: usize, expected: &[Complex]
     }
 }
 
-fn zero() -> Complex {
+fn zero() -> Complex<f64> {
     Complex::zero()
 }
 
-fn one() -> Complex {
+fn one() -> Complex<f64> {
     Complex::new(1.0, 0.0)
 }
 
@@ -44,60 +44,60 @@ fn one() -> Complex {
 
 #[test]
 fn test_identity_gate_values() {
-    assert_complex_eq(I[0][0], one());
-    assert_complex_eq(I[0][1], zero());
-    assert_complex_eq(I[1][0], zero());
-    assert_complex_eq(I[1][1], one());
+    assert_complex_eq((*I)[0][0], one());
+    assert_complex_eq((*I)[0][1], zero());
+    assert_complex_eq((*I)[1][0], zero());
+    assert_complex_eq((*I)[1][1], one());
 }
 
 #[test]
 fn test_pauli_x_gate_values() {
-    assert_complex_eq(X[0][0], zero());
-    assert_complex_eq(X[0][1], one());
-    assert_complex_eq(X[1][0], one());
-    assert_complex_eq(X[1][1], zero());
+    assert_complex_eq((*X)[0][0], zero());
+    assert_complex_eq((*X)[0][1], one());
+    assert_complex_eq((*X)[1][0], one());
+    assert_complex_eq((*X)[1][1], zero());
 }
 
 #[test]
 fn test_pauli_y_gate_values() {
-    assert_complex_eq(Y[0][0], zero());
-    assert_complex_eq(Y[0][1], Complex::new(0.0, -1.0));
-    assert_complex_eq(Y[1][0], Complex::new(0.0, 1.0));
-    assert_complex_eq(Y[1][1], zero());
+    assert_complex_eq((*Y)[0][0], zero());
+    assert_complex_eq((*Y)[0][1], Complex::new(0.0, -1.0));
+    assert_complex_eq((*Y)[1][0], Complex::new(0.0, 1.0));
+    assert_complex_eq((*Y)[1][1], zero());
 }
 
 #[test]
 fn test_pauli_z_gate_values() {
-    assert_complex_eq(Z[0][0], one());
-    assert_complex_eq(Z[0][1], zero());
-    assert_complex_eq(Z[1][0], zero());
-    assert_complex_eq(Z[1][1], Complex::new(-1.0, 0.0));
+    assert_complex_eq((*Z)[0][0], one());
+    assert_complex_eq((*Z)[0][1], zero());
+    assert_complex_eq((*Z)[1][0], zero());
+    assert_complex_eq((*Z)[1][1], Complex::new(-1.0, 0.0));
 }
 
 #[test]
 fn test_s_gate_values() {
-    assert_complex_eq(S[0][0], one());
-    assert_complex_eq(S[0][1], zero());
-    assert_complex_eq(S[1][0], zero());
-    assert_complex_eq(S[1][1], Complex::new(0.0, 1.0));
+    assert_complex_eq((*S)[0][0], one());
+    assert_complex_eq((*S)[0][1], zero());
+    assert_complex_eq((*S)[1][0], zero());
+    assert_complex_eq((*S)[1][1], Complex::new(0.0, 1.0));
 }
 
 #[test]
 fn test_t_gate_values() {
     let v = FRAC_1_SQRT_2 as f64;
-    assert_complex_eq(T[0][0], one());
-    assert_complex_eq(T[0][1], zero());
-    assert_complex_eq(T[1][0], zero());
-    assert_complex_eq(T[1][1], Complex::new(v, v));
+    assert_complex_eq((*T)[0][0], one());
+    assert_complex_eq((*T)[0][1], zero());
+    assert_complex_eq((*T)[1][0], zero());
+    assert_complex_eq((*T)[1][1], Complex::new(v, v));
 }
 
 #[test]
 fn test_hadamard_gate_values() {
     let v = FRAC_1_SQRT_2 as f64;
-    assert_complex_eq(H[0][0], Complex::new(v, 0.0));
-    assert_complex_eq(H[0][1], Complex::new(v, 0.0));
-    assert_complex_eq(H[1][0], Complex::new(v, 0.0));
-    assert_complex_eq(H[1][1], Complex::new(-v, 0.0));
+    assert_complex_eq((*H)[0][0], Complex::new(v, 0.0));
+    assert_complex_eq((*H)[0][1], Complex::new(v, 0.0));
+    assert_complex_eq((*H)[1][0], Complex::new(v, 0.0));
+    assert_complex_eq((*H)[1][1], Complex::new(-v, 0.0));
 }
 
 // ---------------------------------------------------------------------------
@@ -152,28 +152,28 @@ fn test_phase_gate_at_pi_over_4() {
 #[test]
 fn test_swap_gate_values() {
     // Row 0: [1, 0, 0, 0]
-    assert_complex_eq(SWAP[0][0], one());
-    assert_complex_eq(SWAP[0][1], zero());
-    assert_complex_eq(SWAP[0][2], zero());
-    assert_complex_eq(SWAP[0][3], zero());
+    assert_complex_eq((*SWAP)[0][0], one());
+    assert_complex_eq((*SWAP)[0][1], zero());
+    assert_complex_eq((*SWAP)[0][2], zero());
+    assert_complex_eq((*SWAP)[0][3], zero());
 
     // Row 1: [0, 0, 1, 0]
-    assert_complex_eq(SWAP[1][0], zero());
-    assert_complex_eq(SWAP[1][1], zero());
-    assert_complex_eq(SWAP[1][2], one());
-    assert_complex_eq(SWAP[1][3], zero());
+    assert_complex_eq((*SWAP)[1][0], zero());
+    assert_complex_eq((*SWAP)[1][1], zero());
+    assert_complex_eq((*SWAP)[1][2], one());
+    assert_complex_eq((*SWAP)[1][3], zero());
 
     // Row 2: [0, 1, 0, 0]
-    assert_complex_eq(SWAP[2][0], zero());
-    assert_complex_eq(SWAP[2][1], one());
-    assert_complex_eq(SWAP[2][2], zero());
-    assert_complex_eq(SWAP[2][3], zero());
+    assert_complex_eq((*SWAP)[2][0], zero());
+    assert_complex_eq((*SWAP)[2][1], one());
+    assert_complex_eq((*SWAP)[2][2], zero());
+    assert_complex_eq((*SWAP)[2][3], zero());
 
     // Row 3: [0, 0, 0, 1]
-    assert_complex_eq(SWAP[3][0], zero());
-    assert_complex_eq(SWAP[3][1], zero());
-    assert_complex_eq(SWAP[3][2], zero());
-    assert_complex_eq(SWAP[3][3], one());
+    assert_complex_eq((*SWAP)[3][0], zero());
+    assert_complex_eq((*SWAP)[3][1], zero());
+    assert_complex_eq((*SWAP)[3][2], zero());
+    assert_complex_eq((*SWAP)[3][3], one());
 }
 
 // ---------------------------------------------------------------------------
@@ -221,7 +221,7 @@ fn test_qubit_default_is_zero_ket() {
 
 #[test]
 fn test_qubit_x_gate_flips_to_one_ket() {
-    let qx = Qubit::<2>::default() * X;
+    let qx = Qubit::<2>::default() * *X;
     assert_complex_eq(qx[0], zero());
     assert_complex_eq(qx[1], one());
 }
@@ -229,14 +229,14 @@ fn test_qubit_x_gate_flips_to_one_ket() {
 #[test]
 fn test_qubit_hadamard_produces_superposition() {
     let v = FRAC_1_SQRT_2 as f64;
-    let qh = Qubit::<2>::default() * H;
+    let qh = Qubit::<2>::default() * *H;
     assert_complex_eq(qh[0], Complex::new(v, 0.0));
     assert_complex_eq(qh[1], Complex::new(v, 0.0));
 }
 
 #[test]
 fn test_qubit_double_x_is_identity() {
-    let q = Qubit::<2>::default() * X * X;
+    let q = Qubit::<2>::default() * *X * *X;
     assert_complex_eq(q[0], one());
     assert_complex_eq(q[1], zero());
 }
@@ -244,7 +244,7 @@ fn test_qubit_double_x_is_identity() {
 #[test]
 fn test_qubit_double_hadamard_is_identity() {
     // H*H = I, so |0⟩ -> H -> H -> |0⟩
-    let q = Qubit::<2>::default() * H * H;
+    let q = Qubit::<2>::default() * *H * *H;
     assert_complex_eq(q[0], one());
     assert_complex_eq(q[1], zero());
 }
@@ -252,7 +252,7 @@ fn test_qubit_double_hadamard_is_identity() {
 #[test]
 fn test_qubit_z_gate_on_one_ket() {
     // Z|1⟩ = -|1⟩
-    let q = Qubit::<2>::default() * X * Z;
+    let q = Qubit::<2>::default() * *X * *Z;
     assert_complex_eq(q[0], zero());
     assert_complex_eq(q[1], Complex::new(-1.0, 0.0));
 }
@@ -272,7 +272,7 @@ fn test_tensor_zero_zero_is_00() {
 fn test_tensor_zero_one_is_01() {
     // |0⟩ ⊗ |1⟩ = |01⟩, index 1
     let q0 = Qubit::<2>::default();
-    let q1 = Qubit::<2>::default() * X;
+    let q1 = Qubit::<2>::default() * *X;
     let pair = q0 & q1;
     assert_tensor_eq(&pair, 4, &[zero(), one(), zero(), zero()]);
 }
@@ -280,7 +280,7 @@ fn test_tensor_zero_one_is_01() {
 #[test]
 fn test_tensor_one_zero_is_10() {
     // |1⟩ ⊗ |0⟩ = |10⟩, index 2
-    let q0 = Qubit::<2>::default() * X;
+    let q0 = Qubit::<2>::default() * *X;
     let q1 = Qubit::<2>::default();
     let pair = q0 & q1;
     assert_tensor_eq(&pair, 4, &[zero(), zero(), one(), zero()]);
@@ -289,8 +289,8 @@ fn test_tensor_one_zero_is_10() {
 #[test]
 fn test_tensor_one_one_is_11() {
     // |1⟩ ⊗ |1⟩ = |11⟩, index 3
-    let q0 = Qubit::<2>::default() * X;
-    let q1 = Qubit::<2>::default() * X;
+    let q0 = Qubit::<2>::default() * *X;
+    let q1 = Qubit::<2>::default() * *X;
     let pair = q0 & q1;
     assert_tensor_eq(&pair, 4, &[zero(), zero(), zero(), one()]);
 }
@@ -302,7 +302,7 @@ fn test_tensor_one_one_is_11() {
 #[test]
 fn test_tensor_three_qubits_010() {
     // |0⟩ ⊗ |1⟩ ⊗ |0⟩ = |010⟩, index 2 in 8-dim space
-    let partial = Qubit::<2>::default() & (Qubit::<2>::default() * X);
+    let partial = Qubit::<2>::default() & (Qubit::<2>::default() * *X);
     assert_eq!(partial.size(), 4, "intermediate size should be 4");
     assert_eq!(partial.size(), 4);
 
@@ -315,10 +315,10 @@ fn test_tensor_three_qubits_010() {
 #[test]
 fn test_tensor_three_qubits_111() {
     // |1⟩ ⊗ |1⟩ ⊗ |1⟩ = |111⟩, index 7
-    let partial = (Qubit::<2>::default() * X) & (Qubit::<2>::default() * X);
+    let partial = (Qubit::<2>::default() * *X) & (Qubit::<2>::default() * *X);
     assert_eq!(partial.size(), 4);
 
-    let triple = partial & (Qubit::<2>::default() * X);
+    let triple = partial & (Qubit::<2>::default() * *X);
     let mut expected = vec![zero(); 8];
     expected[7] = one();
     assert_tensor_eq(&triple, 8, &expected);
@@ -327,7 +327,7 @@ fn test_tensor_three_qubits_111() {
 #[test]
 fn test_tensor_three_qubits_100() {
     // |1⟩ ⊗ |0⟩ ⊗ |0⟩ = |100⟩, index 4
-    let partial = (Qubit::<2>::default() * X) & Qubit::<2>::default();
+    let partial = (Qubit::<2>::default() * *X) & Qubit::<2>::default();
     assert_eq!(partial.size(), 4);
 
     let triple = partial & Qubit::<2>::default();
@@ -343,8 +343,8 @@ fn test_tensor_three_qubits_100() {
 #[test]
 fn test_tensor_four_qubits_1111() {
     // |1⟩ ⊗ |1⟩ ⊗ |1⟩ ⊗ |1⟩ = |1111⟩, index 15 in 16-dim space
-    let pair_hi = (Qubit::<2>::default() * X) & (Qubit::<2>::default() * X);
-    let pair_lo = (Qubit::<2>::default() * X) & (Qubit::<2>::default() * X);
+    let pair_hi = (Qubit::<2>::default() * *X) & (Qubit::<2>::default() * *X);
+    let pair_lo = (Qubit::<2>::default() * *X) & (Qubit::<2>::default() * *X);
     assert_eq!(pair_hi.size(), 4);
     assert_eq!(pair_lo.size(), 4);
 
@@ -369,8 +369,8 @@ fn test_tensor_four_qubits_0000() {
 #[test]
 fn test_tensor_four_qubits_1010() {
     // |1⟩ ⊗ |0⟩ ⊗ |1⟩ ⊗ |0⟩ = |1010⟩, index 10
-    let pair_hi = (Qubit::<2>::default() * X) & Qubit::<2>::default();
-    let pair_lo = (Qubit::<2>::default() * X) & Qubit::<2>::default();
+    let pair_hi = (Qubit::<2>::default() * *X) & Qubit::<2>::default();
+    let pair_lo = (Qubit::<2>::default() * *X) & Qubit::<2>::default();
     let quad = pair_hi & pair_lo;
 
     let mut expected = vec![zero(); 16];
@@ -385,10 +385,10 @@ fn test_tensor_four_qubits_1010() {
 #[test]
 fn test_tensor_qubit_and_tensor_qubit_right() {
     // |1⟩ ⊗ (|0⟩ ⊗ |1⟩) = |101⟩, index 5
-    let inner = Qubit::<2>::default() & (Qubit::<2>::default() * X);
+    let inner = Qubit::<2>::default() & (Qubit::<2>::default() * *X);
     assert_eq!(inner.size(), 4);
 
-    let triple = (Qubit::<2>::default() * X) & inner;
+    let triple = (Qubit::<2>::default() * *X) & inner;
     let mut expected = vec![zero(); 8];
     expected[5] = one();
     assert_tensor_eq(&triple, 8, &expected);
@@ -401,7 +401,7 @@ fn test_tensor_qubit_and_tensor_qubit_right() {
 #[test]
 fn test_tensor_two_hadamard_uniform_superposition() {
     // H|0⟩ ⊗ H|0⟩ — all four amplitudes should be 1/2
-    let pair = (Qubit::<2>::default() * H) & (Qubit::<2>::default() * H);
+    let pair = (Qubit::<2>::default() * *H) & (Qubit::<2>::default() * *H);
     let expected = vec![Complex::new(0.5, 0.0); 4];
     assert_tensor_eq(&pair, 4, &expected);
 }
@@ -409,7 +409,7 @@ fn test_tensor_two_hadamard_uniform_superposition() {
 #[test]
 fn test_tensor_three_hadamard_uniform_superposition() {
     // H|0⟩ ⊗ H|0⟩ ⊗ H|0⟩ — all eight amplitudes 1/sqrt(8)
-    let make_h = || Qubit::<2>::default() * H;
+    let make_h = || Qubit::<2>::default() * *H;
     let partial = make_h() & make_h();
     assert_eq!(partial.size(), 4);
 
@@ -422,7 +422,7 @@ fn test_tensor_three_hadamard_uniform_superposition() {
 #[test]
 fn test_tensor_four_hadamard_uniform_superposition() {
     // H|0⟩^⊗4 — all 16 amplitudes 1/4
-    let make_h = || Qubit::<2>::default() * H;
+    let make_h = || Qubit::<2>::default() * *H;
     let pair_a = make_h() & make_h();
     let pair_b = make_h() & make_h();
     let quad = pair_a & pair_b;
@@ -441,7 +441,7 @@ fn test_tensor_associativity_left_vs_right() {
     // (|0⟩ ⊗ |1⟩) ⊗ |0⟩  ==  |0⟩ ⊗ (|1⟩ ⊗ |0⟩)
     // exercises both TensorQubit & Qubit and Qubit & TensorQubit impls
     let make_zero = || Qubit::<2>::default();
-    let make_one = || Qubit::<2>::default() * X;
+    let make_one = || Qubit::<2>::default() * *X;
 
     let left = (make_zero() & make_one()) & make_zero();
     let right = make_zero() & (make_one() & make_zero());
@@ -458,7 +458,7 @@ fn test_tensor_associativity_four_qubits() {
     // ((|1⟩ ⊗ |0⟩) ⊗ |1⟩) ⊗ |0⟩  ==  |1⟩ ⊗ (|0⟩ ⊗ (|1⟩ ⊗ |0⟩))
     // both should be |1010⟩, index 10
     let make_zero = || Qubit::<2>::default();
-    let make_one = || Qubit::<2>::default() * X;
+    let make_one = || Qubit::<2>::default() * *X;
 
     let left = ((make_one() & make_zero()) & make_one()) & make_zero();
     let right = make_one() & (make_zero() & (make_one() & make_zero()));
@@ -476,7 +476,7 @@ fn test_tensor_associativity_four_qubits() {
 
 #[test]
 fn test_tensor_norm_preserved_two_qubits() {
-    let pair = (Qubit::<2>::default() * H) & (Qubit::<2>::default() * X);
+    let pair = (Qubit::<2>::default() * *H) & (Qubit::<2>::default() * *X);
     assert_eq!(pair.size(), 4);
 
     let norm_sq: f64 =
@@ -486,7 +486,7 @@ fn test_tensor_norm_preserved_two_qubits() {
 
 #[test]
 fn test_tensor_norm_preserved_three_qubits() {
-    let make_h = || Qubit::<2>::default() * H;
+    let make_h = || Qubit::<2>::default() * *H;
     let triple = (make_h() & make_h()) & make_h();
     assert_eq!(triple.size(), 8);
 
@@ -497,7 +497,7 @@ fn test_tensor_norm_preserved_three_qubits() {
 
 #[test]
 fn test_tensor_norm_preserved_four_qubits() {
-    let make_h = || Qubit::<2>::default() * H;
+    let make_h = || Qubit::<2>::default() * *H;
     let quad = (make_h() & make_h()) & (make_h() & make_h());
     assert_eq!(quad.size(), 16);
 
@@ -513,7 +513,7 @@ fn test_tensor_norm_preserved_four_qubits() {
 #[test]
 fn test_into_qubit_correct_size_01() {
     // |0⟩ ⊗ |1⟩ -> TensorQubit(4) -> Qubit<4>
-    let pair = Qubit::<2>::default() & (Qubit::<2>::default() * X);
+    let pair = Qubit::<2>::default() & (Qubit::<2>::default() * *X);
     assert_eq!(pair.size(), 4);
 
     let q: Qubit<4> = pair.into_qubit::<4>();
@@ -526,7 +526,7 @@ fn test_into_qubit_correct_size_01() {
 #[test]
 fn test_into_qubit_correct_size_10() {
     // |1⟩ ⊗ |0⟩ -> Qubit<4>, index 2
-    let pair = (Qubit::<2>::default() * X) & Qubit::<2>::default();
+    let pair = (Qubit::<2>::default() * *X) & Qubit::<2>::default();
     let q: Qubit<4> = pair.into_qubit::<4>();
     assert_complex_eq(q[0], zero());
     assert_complex_eq(q[1], zero());
@@ -537,7 +537,7 @@ fn test_into_qubit_correct_size_10() {
 #[test]
 fn test_into_qubit_three_qubit_system() {
     // |0⟩ ⊗ |1⟩ ⊗ |0⟩ -> Qubit<8>, index 2
-    let triple = (Qubit::<2>::default() & (Qubit::<2>::default() * X)) & Qubit::<2>::default();
+    let triple = (Qubit::<2>::default() & (Qubit::<2>::default() * *X)) & Qubit::<2>::default();
     assert_eq!(triple.size(), 8);
 
     let q: Qubit<8> = triple.into_qubit::<8>();

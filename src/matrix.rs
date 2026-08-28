@@ -6,6 +6,7 @@
 use std::ops::{Add, Index, IndexMut, Mul, Sub};
 
 use crate::complex::Complex;
+use crate::reals::RealField;
 use crate::vec::vec2::Vec2;
 
 /// A const-generic matrix with `ROWS x COLS` elements.
@@ -14,6 +15,7 @@ use crate::vec::vec2::Vec2;
 /// - `T`: element type.
 /// - `ROWS`: number of rows.
 /// - `COLS`: number of columns.
+#[derive(Debug, Copy, Clone)]
 pub struct Matrix<T, const ROWS: usize, const COLS: usize> {
     /// Backing matrix data in row-major layout.
     pub data: [[T; COLS]; ROWS],
@@ -93,13 +95,14 @@ where
     }
 }
 
-impl<T, const ROWS: usize, const COLS: usize> Mul<Complex> for Matrix<T, ROWS, COLS>
+impl<T, const ROWS: usize, const COLS: usize> Mul<Complex<T>> for Matrix<T, ROWS, COLS>
 where
-    for<'a> &'a T: Mul<&'a Complex, Output = Complex>,
+    T: RealField,
+    for<'a> &'a T: Mul<&'a Complex<T>, Output = Complex<T>>,
 {
-    type Output = Matrix<Complex, ROWS, COLS>;
+    type Output = Matrix<Complex<T>, ROWS, COLS>;
 
-    fn mul(self, rhs: Complex) -> Self::Output {
+    fn mul(self, rhs: Complex<T>) -> Self::Output {
         let left = self.data;
         Matrix::from_fn(|i, j| &left[i][j] * &rhs)
     }
