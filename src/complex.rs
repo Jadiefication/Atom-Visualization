@@ -4,16 +4,16 @@
 //! for numeric code where values are passed by value frequently (for example,
 //! matrix and qubit operations).
 
-use std::ops::{Add, Div, Mul, Neg, Sub};
+use std::ops::{Add, Div, Mul, Neg, Rem, Sub};
 
-use crate::reals::RealField;
+use num_traits::real::Real;
 
 /// A complex number represented as `re + i * im`.
 ///
 /// The implementation uses `f64` components and supports arithmetic with both
 /// complex and real (`f64`) operands.
 #[derive(Debug, Copy, Clone, PartialEq)]
-pub struct Complex<T: RealField> {
+pub struct Complex<T: Real> {
     /// Real part.
     pub re: T,
     /// Imaginary part.
@@ -22,7 +22,7 @@ pub struct Complex<T: RealField> {
 
 pub type Complex64 = Complex<f64>;
 
-impl<T: RealField> Complex<T> {
+impl<T: Real> Complex<T> {
     /// Creates a new complex number from real and imaginary parts.
     ///
     /// # Example
@@ -35,11 +35,6 @@ impl<T: RealField> Complex<T> {
     /// ```
     pub const fn new(real: T, imaginary: T) -> Self {
         Self { re: real, im: imaginary }
-    }
-
-    /// Returns the additive identity `0 + 0i`.
-    pub fn zero() -> Self {
-        Self { re: T::zero(), im: T::zero() }
     }
 
     /// Returns the complex conjugate `re - i * im`.
@@ -74,9 +69,18 @@ impl<T: RealField> Complex<T> {
     pub fn norm_sqr(&self) -> T {
         self.re.powi(2) + self.im.powi(2)
     }
+
+    /// Returns the additive identity `0 + 0i`.
+    pub fn zero() -> Self {
+        Self { re: T::zero(), im: T::zero() }
+    }
+
+    pub fn one_im() -> Self {
+        Self { re: T::zero(), im: T::one() }
+    }
 }
 
-impl<T: RealField> Add for Complex<T> {
+impl<T: Real> Add for Complex<T> {
     type Output = Self;
 
     fn add(self, other: Self) -> Self {
@@ -84,7 +88,7 @@ impl<T: RealField> Add for Complex<T> {
     }
 }
 
-impl<T: RealField> Sub for Complex<T> {
+impl<T: Real> Sub for Complex<T> {
     type Output = Self;
 
     fn sub(self, other: Self) -> Self {
@@ -92,7 +96,7 @@ impl<T: RealField> Sub for Complex<T> {
     }
 }
 
-impl<T: RealField> Mul for Complex<T> {
+impl<T: Real> Mul for Complex<T> {
     type Output = Self;
 
     fn mul(self, other: Self) -> Self {
@@ -103,7 +107,7 @@ impl<T: RealField> Mul for Complex<T> {
     }
 }
 
-impl<T: RealField> Div for Complex<T> {
+impl<T: Real> Div for Complex<T> {
     type Output = Self;
 
     fn div(self, other: Self) -> Self {
@@ -116,7 +120,7 @@ impl<T: RealField> Div for Complex<T> {
     }
 }
 
-impl<T: RealField> Neg for Complex<T> {
+impl<T: Real> Neg for Complex<T> {
     type Output = Self;
 
     fn neg(self) -> Self {
@@ -124,7 +128,7 @@ impl<T: RealField> Neg for Complex<T> {
     }
 }
 
-impl<T: RealField> Add<T> for Complex<T> {
+impl<T: Real> Add<T> for Complex<T> {
     type Output = Self;
 
     fn add(self, other: T) -> Self {
@@ -132,7 +136,7 @@ impl<T: RealField> Add<T> for Complex<T> {
     }
 }
 
-impl<T: RealField> Sub<T> for Complex<T> {
+impl<T: Real> Sub<T> for Complex<T> {
     type Output = Self;
 
     fn sub(self, other: T) -> Self {
@@ -140,7 +144,7 @@ impl<T: RealField> Sub<T> for Complex<T> {
     }
 }
 
-impl<T: RealField> Mul<T> for Complex<T> {
+impl<T: Real> Mul<T> for Complex<T> {
     type Output = Self;
 
     fn mul(self, other: T) -> Self {
@@ -148,7 +152,7 @@ impl<T: RealField> Mul<T> for Complex<T> {
     }
 }
 
-impl<T: RealField> Div<T> for Complex<T> {
+impl<T: Real> Div<T> for Complex<T> {
     type Output = Self;
 
     fn div(self, other: T) -> Self {
@@ -156,7 +160,15 @@ impl<T: RealField> Div<T> for Complex<T> {
     }
 }
 
-impl<T: RealField> From<T> for Complex<T> {
+impl<T: Real> Rem<T> for Complex<T> {
+    type Output = Self;
+
+    fn rem(self, rhs: T) -> Self::Output {
+        Self { re: self.re % rhs, im: self.im % rhs }
+    }
+}
+
+impl<T: Real> From<T> for Complex<T> {
     fn from(val: T) -> Self {
         Complex::new(val, T::zero())
     }

@@ -38,7 +38,5 @@ pub mod matrix;
 mod priv_gpu;
 /// Quantum gates and qubit state utilities.
 pub mod quantum;
-/// Numeric trait abstractions used by generic math types.
-pub mod reals;
 /// Vector types (`Vec2`, `Vec3`, `Vec4`).
 pub mod vec;

@@ -1,22 +1,19 @@
 use std::ops::{Add, Div, Mul, Sub};
 
-use crate::reals::RealField;
+use num_traits::real::Real;
 
 /// A two-dimensional vector.
 ///
 /// `Vec2<T>` is generic over scalar type `T`, typically `f32` or `f64`.
 #[derive(Debug, Copy, Clone, PartialEq)]
-pub struct Vec2<T> {
+pub struct Vec2<T: Real> {
     /// X component.
     pub x: T,
     /// Y component.
     pub y: T,
 }
 
-impl<T> Vec2<T>
-where
-    T: RealField,
-{
+impl<T: Real> Vec2<T> {
     /// Returns the dot product of `self` and `other`.
     ///
     /// In coordinates: `x1*x2 + y1*y2`.
@@ -37,10 +34,7 @@ where
     }
 }
 
-impl<T> Add for Vec2<T>
-where
-    T: Copy + Add<Output = T>,
-{
+impl<T: Real> Add for Vec2<T> {
     type Output = Self;
 
     fn add(self, rhs: Self) -> Self {
@@ -48,10 +42,7 @@ where
     }
 }
 
-impl<T> Sub for Vec2<T>
-where
-    T: Copy + Sub<Output = T>,
-{
+impl<T: Real> Sub for Vec2<T> {
     type Output = Self;
 
     fn sub(self, rhs: Self) -> Self {
@@ -59,10 +50,7 @@ where
     }
 }
 
-impl<T> Mul<T> for Vec2<T>
-where
-    T: Copy + Mul<Output = T>,
-{
+impl<T: Real> Mul<T> for Vec2<T> {
     type Output = Self;
 
     fn mul(self, rhs: T) -> Self {
@@ -70,10 +58,7 @@ where
     }
 }
 
-impl<T> Div<T> for Vec2<T>
-where
-    T: Copy + Div<Output = T>,
-{
+impl<T: Real> Div<T> for Vec2<T> {
     type Output = Self;
 
     fn div(self, rhs: T) -> Self {

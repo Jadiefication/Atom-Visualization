@@ -2,7 +2,6 @@ use std::f64;
 
 use haje::calculus::{g_wave_packet, laplacian};
 use haje::complex::Complex;
-use haje::vec::vec2::Vec2;
 
 #[test]
 fn test_g_wave_packet_zero() {
@@ -50,8 +49,8 @@ fn test_laplacian_internal() {
         vec![Complex::new(1.0, 0.0), Complex::new(2.0, 0.0), Complex::new(1.0, 0.0)],
         vec![Complex::new(1.0, 0.0), Complex::new(1.0, 0.0), Complex::new(1.0, 0.0)],
     ];
-    let center = Vec2 { x: 1, y: 1 };
-    let res = laplacian(&center, &grid);
+    let center: (usize, usize) = (1, 1);
+    let res = laplacian(center, &grid);
 
     // left + right + up + down - 4 * center
     // 1 + 1 + 1 + 1 - 4 * 2 = 4 - 8 = -4
@@ -79,8 +78,8 @@ fn test_laplacian_boundary() {
     // down = (0, 0) -> 1
     // center = (0, 1) -> 1
     // Laplacian: 1 + 2 + 1 + 1 - 4 * 1 = 5 - 4 = 1
-    let center = Vec2 { x: 0, y: 1 };
-    let res = laplacian(&center, &grid);
+    let center: (usize, usize) = (0, 1);
+    let res = laplacian(center, &grid);
     assert!((res.re - 1.0).abs() < 1e-10);
 
     // Test (1, 0) - Bottom edge (saturating_sub(1) for y=0 is 0, which is center)
@@ -99,8 +98,8 @@ fn test_laplacian_boundary() {
     // down = (1, 0) = 1 (saturating_sub(1) of 0 is 0)
     // center = (1, 0) = 1
     // Laplacian: 1 + 1 + 2 + 1 - 4 * 1 = 5 - 4 = 1
-    let center = Vec2 { x: 1, y: 0 };
-    let res = laplacian(&center, &grid);
+    let center: (usize, usize) = (1, 0);
+    let res = laplacian(center, &grid);
     assert!((res.re - 1.0).abs() < 1e-10);
 }
 
@@ -123,8 +122,8 @@ fn test_laplacian_corner() {
     // down = (0, 0) = 1 (saturating_sub(1) of 0 is 0)
     // center = (0, 0) = 1
     // Laplacian: 1 + 1 + 1 + 1 - 4 * 1 = 0
-    let center = Vec2 { x: 0, y: 0 };
-    let res = laplacian(&center, &grid);
+    let center: (usize, usize) = (0, 0);
+    let res = laplacian(center, &grid);
     assert!((res.re - 0.0).abs() < 1e-10);
 
     // Test (2, 2) - Top-right corner
@@ -134,7 +133,7 @@ fn test_laplacian_corner() {
     // down = (2, 1) = 1
     // center = (2, 2) = 1
     // Laplacian: 1 + 0 + 0 + 1 - 4 * 1 = 2 - 4 = -2
-    let center = Vec2 { x: 2, y: 2 };
-    let res = laplacian(&center, &grid);
+    let center: (usize, usize) = (2, 2);
+    let res = laplacian(center, &grid);
     assert!((res.re - (-2.0)).abs() < 1e-10);
 }

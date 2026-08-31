@@ -5,8 +5,9 @@
 
 use std::ops::{Add, Index, IndexMut, Mul, Sub};
 
+use num_traits::real::Real;
+
 use crate::complex::Complex;
-use crate::reals::RealField;
 use crate::vec::vec2::Vec2;
 
 /// A const-generic matrix with `ROWS x COLS` elements.
@@ -97,7 +98,7 @@ where
 
 impl<T, const ROWS: usize, const COLS: usize> Mul<Complex<T>> for Matrix<T, ROWS, COLS>
 where
-    T: RealField,
+    T: Real,
     for<'a> &'a T: Mul<&'a Complex<T>, Output = Complex<T>>,
 {
     type Output = Matrix<Complex<T>, ROWS, COLS>;
@@ -202,7 +203,7 @@ impl<T> Matrix<T, 3, 3> {
 
 impl<T, N> Mul<Vec2<T>> for Matrix<N, 2, 2>
 where
-    T: Mul<N, Output = T> + Add<Output = T>,
+    T: Mul<N, Output = T> + Add<Output = T> + Real,
     for<'a> &'a T: Mul<&'a N, Output = T>,
 {
     type Output = Vec2<T>;

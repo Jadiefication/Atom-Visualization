@@ -1,7 +1,6 @@
 use std::f64::consts::PI;
 
 use crate::complex::{Complex, Complex64};
-use crate::vec::vec2::Vec2;
 
 /// Reduced Planck constant (`ħ`) in SI units.
 pub const PLANCK: f64 = 1.054e-34;
@@ -23,9 +22,9 @@ pub fn g_wave_packet(x: f64, sigma: f64) -> Complex64 {
 ///
 /// This uses a 5-point stencil equivalent to:
 /// `left + right + up + down - 4 * center`.
-pub fn laplacian(center: &Vec2<usize>, grid: &[Vec<Complex64>]) -> Complex64 {
-    let x = center.x;
-    let y = center.y;
+pub fn laplacian(center: (usize, usize), grid: &[Vec<Complex64>]) -> Complex64 {
+    let x = center.0;
+    let y = center.1;
 
     let left_val = get(grid, x.saturating_sub(1), y);
     let right_val = get(grid, x + 1, y);

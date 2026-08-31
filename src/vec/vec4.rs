@@ -1,13 +1,13 @@
 use std::ops::{Add, Div, Mul, Sub};
 
-use crate::reals::RealField;
+use num_traits::real::Real;
 
 /// A four-dimensional vector.
 ///
 /// The fields are named `r/g/b/a` to align with common color-vector usage,
 /// but the type can also represent generic 4D coordinates.
 #[derive(Debug, Copy, Clone, PartialEq)]
-pub struct Vec4<T> {
+pub struct Vec4<T: Real> {
     /// First component (often interpreted as red channel).
     pub r: T,
     /// Second component (often interpreted as green channel).
@@ -18,10 +18,7 @@ pub struct Vec4<T> {
     pub a: T,
 }
 
-impl<T> Vec4<T>
-where
-    T: RealField,
-{
+impl<T: Real> Vec4<T> {
     /// Returns the dot product of `self` and `other`.
     pub fn dot(self, other: Self) -> T {
         self.r * other.r + self.g * other.g + self.b * other.b + self.a * other.a
@@ -40,10 +37,7 @@ where
     }
 }
 
-impl<T> Add for Vec4<T>
-where
-    T: Copy + Add<Output = T>,
-{
+impl<T: Real> Add for Vec4<T> {
     type Output = Self;
 
     fn add(self, rhs: Self) -> Self {
@@ -51,10 +45,7 @@ where
     }
 }
 
-impl<T> Sub for Vec4<T>
-where
-    T: Copy + Sub<Output = T>,
-{
+impl<T: Real> Sub for Vec4<T> {
     type Output = Self;
 
     fn sub(self, rhs: Self) -> Self {
@@ -62,10 +53,7 @@ where
     }
 }
 
-impl<T> Mul<T> for Vec4<T>
-where
-    T: Copy + Mul<Output = T>,
-{
+impl<T: Real> Mul<T> for Vec4<T> {
     type Output = Self;
 
     fn mul(self, rhs: T) -> Self {
@@ -73,10 +61,7 @@ where
     }
 }
 
-impl<T> Div<T> for Vec4<T>
-where
-    T: Copy + Div<Output = T>,
-{
+impl<T: Real> Div<T> for Vec4<T> {
     type Output = Self;
 
     fn div(self, rhs: T) -> Self {
