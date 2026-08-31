@@ -1,8 +1,10 @@
 use tokio::sync::OnceCell;
 use wgpu::Adapter;
 use wgpu::Device;
+use wgpu::DeviceDescriptor;
 use wgpu::Instance;
 use wgpu::Queue;
+use wgpu::RequestAdapterOptions;
 
 static GPU: OnceCell<Gpu> = OnceCell::const_new();
 
@@ -25,6 +27,6 @@ impl Gpu {
     }
 
     pub async fn global() {
-        GPU.get_or_init(|| async { Gpu::new().await }).await
+        GPU.get_or_init(|| async { Gpu::new().await }).await;
     }
 }

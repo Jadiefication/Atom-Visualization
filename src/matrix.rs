@@ -1,6 +1,6 @@
 //! Const-generic matrix type and operations.
 //!
-//! [`Matrix`] stores values in row-major order and uses const generics for shape,
+//! [`Matrix`](crate::matrix::Matrix) stores values in row-major order and uses const generics for shape,
 //! making dimensions part of the type.
 
 use std::ops::{Add, Index, IndexMut, Mul, Sub};

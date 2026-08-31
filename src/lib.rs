@@ -13,7 +13,7 @@
 //!   determinant/rotation helpers.
 //! - [`calculus`]: utility functions used by the tests and examples (Gaussian
 //!   wave packet, discrete Laplacian, and `relu`).
-//! - [`vec`]: 2D/3D/4D vector types for geometric computations.
+//! - [`mod@vec`]: 2D/3D/4D vector types for geometric computations.
 //! - [`quantum`]: predefined single- and two-qubit gates and qubit state containers.
 //!
 //! # Example
