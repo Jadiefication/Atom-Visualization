@@ -237,6 +237,7 @@ dependencies = [
 name = "haje"
 version = "0.3.0"
 dependencies = [
+ "num-traits",
  "tokio",
  "wgpu",
 ]
