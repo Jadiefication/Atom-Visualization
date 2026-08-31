@@ -2,12 +2,10 @@
 //!
 //! [`Matrix`](crate::matrix::Matrix) stores values in row-major order and uses const generics for shape,
 //! making dimensions part of the type.
-
-use std::ops::{Add, Index, IndexMut, Mul, Sub};
+use std::ops::{Add, Div, Index, IndexMut, Mul, Rem, Sub};
 
 use num_traits::real::Real;
 
-use crate::complex::Complex;
 use crate::vec::vec2::Vec2;
 
 /// A const-generic matrix with `ROWS x COLS` elements.
@@ -44,6 +42,9 @@ impl<T, const ROWS: usize, const COLS: usize> Matrix<T, ROWS, COLS> {
     }
 }
 
+impl_binary_ops!(Matrix; Add::add => +, Sub::sub => -);
+impl_binary_ops!(MScalar; Mul::mul => *, Div::div => /, Rem::rem => %);
+
 impl<T, const ROWS: usize, const COLS: usize> Index<usize> for Matrix<T, ROWS, COLS> {
     type Output = [T; COLS];
 
@@ -55,57 +56,6 @@ impl<T, const ROWS: usize, const COLS: usize> Index<usize> for Matrix<T, ROWS, C
 impl<T, const ROWS: usize, const COLS: usize> IndexMut<usize> for Matrix<T, ROWS, COLS> {
     fn index_mut(&mut self, index: usize) -> &mut Self::Output {
         &mut self.data[index]
-    }
-}
-
-impl<T, const ROWS: usize, const COLS: usize> Add for Matrix<T, ROWS, COLS>
-where
-    for<'a> &'a T: Add<Output = T>,
-{
-    type Output = Matrix<T, ROWS, COLS>;
-
-    fn add(self, rhs: Self) -> Self::Output {
-        let left = self.data;
-        let right = rhs.data;
-        Matrix::from_fn(|i, j| &left[i][j] + &right[i][j])
-    }
-}
-
-impl<T, const ROWS: usize, const COLS: usize> Sub for Matrix<T, ROWS, COLS>
-where
-    for<'a> &'a T: Sub<Output = T>,
-{
-    type Output = Matrix<T, ROWS, COLS>;
-
-    fn sub(self, rhs: Self) -> Self::Output {
-        let left = self.data;
-        let right = rhs.data;
-        Matrix::from_fn(|i, j| &left[i][j] - &right[i][j])
-    }
-}
-
-impl<T, const ROWS: usize, const COLS: usize> Mul<f64> for Matrix<T, ROWS, COLS>
-where
-    for<'a> &'a T: Mul<&'a f64, Output = f64>,
-{
-    type Output = Matrix<f64, ROWS, COLS>;
-
-    fn mul(self, rhs: f64) -> Self::Output {
-        let left = self.data;
-        Matrix::from_fn(|i, j| &left[i][j] * &rhs)
-    }
-}
-
-impl<T, const ROWS: usize, const COLS: usize> Mul<Complex<T>> for Matrix<T, ROWS, COLS>
-where
-    T: Real,
-    for<'a> &'a T: Mul<&'a Complex<T>, Output = Complex<T>>,
-{
-    type Output = Matrix<Complex<T>, ROWS, COLS>;
-
-    fn mul(self, rhs: Complex<T>) -> Self::Output {
-        let left = self.data;
-        Matrix::from_fn(|i, j| &left[i][j] * &rhs)
     }
 }
 

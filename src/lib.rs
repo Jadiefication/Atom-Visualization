@@ -28,6 +28,9 @@
 //! assert_eq!(z, Complex::new(1.0, -2.0));
 //! ```
 
+#[macro_use]
+pub(crate) mod macros;
+
 /// Calculus and grid-based helper functions.
 pub mod calculus;
 /// Complex number utilities and operators.

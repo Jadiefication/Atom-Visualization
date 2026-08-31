@@ -4,7 +4,8 @@
 //! for numeric code where values are passed by value frequently (for example,
 //! matrix and qubit operations).
 
-use std::ops::{Add, Div, Mul, Neg, Rem, Sub};
+use std::ops::Rem;
+use std::ops::{Add, Div, Mul, Neg, Sub};
 
 use num_traits::real::Real;
 
@@ -80,21 +81,8 @@ impl<T: Real> Complex<T> {
     }
 }
 
-impl<T: Real> Add for Complex<T> {
-    type Output = Self;
-
-    fn add(self, other: Self) -> Self {
-        Self { re: self.re + other.re, im: self.im + other.im }
-    }
-}
-
-impl<T: Real> Sub for Complex<T> {
-    type Output = Self;
-
-    fn sub(self, other: Self) -> Self {
-        Self { re: self.re - other.re, im: self.im - other.im }
-    }
-}
+impl_binary_ops!(Complex; Add::add => +, Sub::sub => -);
+impl_binary_ops!(CScalar; Mul::mul => *, Div::div => /, Rem::rem => %);
 
 impl<T: Real> Mul for Complex<T> {
     type Output = Self;
@@ -125,46 +113,6 @@ impl<T: Real> Neg for Complex<T> {
 
     fn neg(self) -> Self {
         Self { re: -self.re, im: -self.im }
-    }
-}
-
-impl<T: Real> Add<T> for Complex<T> {
-    type Output = Self;
-
-    fn add(self, other: T) -> Self {
-        Self { re: self.re + other, im: self.im }
-    }
-}
-
-impl<T: Real> Sub<T> for Complex<T> {
-    type Output = Self;
-
-    fn sub(self, other: T) -> Self {
-        Self { re: self.re - other, im: self.im }
-    }
-}
-
-impl<T: Real> Mul<T> for Complex<T> {
-    type Output = Self;
-
-    fn mul(self, other: T) -> Self {
-        Self { re: self.re * other, im: self.im * other }
-    }
-}
-
-impl<T: Real> Div<T> for Complex<T> {
-    type Output = Self;
-
-    fn div(self, other: T) -> Self {
-        Self { re: self.re / other, im: self.im / other }
-    }
-}
-
-impl<T: Real> Rem<T> for Complex<T> {
-    type Output = Self;
-
-    fn rem(self, rhs: T) -> Self::Output {
-        Self { re: self.re % rhs, im: self.im % rhs }
     }
 }
 
