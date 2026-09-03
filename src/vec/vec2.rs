@@ -5,7 +5,7 @@ use num_traits::real::Real;
 /// A two-dimensional vector.
 ///
 /// `Vec2<T>` is generic over scalar type `T`, typically `f32` or `f64`.
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Ord, PartialOrd, Hash, Default)]
 pub struct Vec2<T: Real> {
     /// X component.
     pub x: T,

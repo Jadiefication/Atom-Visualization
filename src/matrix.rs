@@ -14,7 +14,7 @@ use crate::vec::vec2::Vec2;
 /// - `T`: element type.
 /// - `ROWS`: number of rows.
 /// - `COLS`: number of columns.
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Ord, PartialOrd, Hash)]
 pub struct Matrix<T, const ROWS: usize, const COLS: usize> {
     /// Backing matrix data in row-major layout.
     pub data: [[T; COLS]; ROWS],

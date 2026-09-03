@@ -6,7 +6,7 @@ use num_traits::real::Real;
 ///
 /// The fields are named `r/g/b/a` to align with common color-vector usage,
 /// but the type can also represent generic 4D coordinates.
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Ord, PartialOrd, Hash, Default)]
 pub struct Vec4<T: Real> {
     /// First component (often interpreted as red channel).
     pub r: T,

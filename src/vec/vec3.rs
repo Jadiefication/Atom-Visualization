@@ -5,7 +5,7 @@ use num_traits::real::Real;
 /// A three-dimensional vector.
 ///
 /// Suitable for geometry and physics-style operations in Cartesian space.
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Ord, PartialOrd, Hash, Default)]
 pub struct Vec3<T: Real> {
     /// X component.
     pub x: T,

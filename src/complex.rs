@@ -13,7 +13,7 @@ use num_traits::real::Real;
 ///
 /// The implementation uses `f64` components and supports arithmetic with both
 /// complex and real (`f64`) operands.
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Ord, PartialOrd, Hash, Default)]
 pub struct Complex<T: Real> {
     /// Real part.
     pub re: T,
